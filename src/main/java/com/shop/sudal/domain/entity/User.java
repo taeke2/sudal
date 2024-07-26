@@ -1,11 +1,12 @@
 package com.shop.sudal.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -43,7 +44,7 @@ public class User {
 
     // build
     @Builder
-    public User(String username, String email, String password, LocalDate birth, String phone,
+    public User(Long id, String username, String email, String password, LocalDate birth, String phone,
                 int gender, Boolean isSuspended, Boolean isDeleted) {
 
         if (username == null || username.isEmpty())
@@ -55,6 +56,7 @@ public class User {
         if (phone == null || phone.isEmpty()) throw new IllegalArgumentException("Phone cannot be null or empty");
         if (gender < 1 || gender > 4) throw new IllegalArgumentException("Gender must be between 1 and 4");
 
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;

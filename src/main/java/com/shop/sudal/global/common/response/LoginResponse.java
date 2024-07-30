@@ -1,6 +1,6 @@
-package com.shop.sudal.global.common;
+package com.shop.sudal.global.common.response;
 
-import com.shop.sudal.domain.user.dto.JwtDto;
+import com.shop.sudal.domain.user.model.JwtDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

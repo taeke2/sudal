@@ -1,4 +1,4 @@
-package com.shop.sudal.domain.user.dto;
+package com.shop.sudal.domain.user.model;
 
 import lombok.Getter;
 import lombok.Setter;

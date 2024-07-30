@@ -36,7 +36,7 @@ public class Address {
     private Boolean isDefault;
 
     @Builder
-    public Address(User user, String address, String addressDetail, String recipientName, String recipientPhone,
+    public Address(Long id, User user, String address, String addressDetail, String recipientName, String recipientPhone,
                    String zipcode, String deliveryInstructions, Boolean isDefault) {
         if (address == null || address.isEmpty()) throw new IllegalArgumentException("Address cannot be null or empty");
         if (addressDetail == null || addressDetail.isEmpty())
@@ -47,6 +47,7 @@ public class Address {
             throw new IllegalArgumentException("Recipient phone cannot be null or empty");
         if (zipcode == null || zipcode.isEmpty()) throw new IllegalArgumentException("Zipcode cannot be null or empty");
 
+        this.id = id;
         this.user = user;
         this.address = address;
         this.addressDetail = addressDetail;

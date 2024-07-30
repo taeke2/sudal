@@ -1,7 +1,7 @@
 package com.shop.sudal.global.config;
 
 import com.shop.sudal.domain.entity.User;
-import com.shop.sudal.global.util.AuditorAwareImpl;
+import com.shop.sudal.global.util.AuditorAwareUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -13,6 +13,6 @@ public class AuditingConfig {
 
     @Bean
     public AuditorAware<User> auditorProvider() {
-        return new AuditorAwareImpl();
+        return new AuditorAwareUtil();
     }
 }

@@ -1,10 +1,12 @@
 package com.shop.sudal.domain.entity;
 
+import com.shop.sudal.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
@@ -12,7 +14,8 @@ import java.time.LocalDate;
 @Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+@EntityListeners(AuditingEntityListener.class)
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,4 +69,5 @@ public class User {
         this.isSuspended = isSuspended;
         this.isDeleted = isDeleted;
     }
+
 }

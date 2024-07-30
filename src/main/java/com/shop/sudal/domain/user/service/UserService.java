@@ -2,12 +2,12 @@ package com.shop.sudal.domain.user.service;
 
 import com.shop.sudal.domain.entity.User;
 import com.shop.sudal.domain.user.dto.JoinRequest;
-import com.shop.sudal.domain.user.dto.JwtResponse;
+import com.shop.sudal.domain.user.dto.JwtDto;
 import com.shop.sudal.domain.user.dto.LoginRequest;
-import com.shop.sudal.domain.user.dto.LoginResponse;
+import com.shop.sudal.domain.user.dto.LoginDto;
 import com.shop.sudal.domain.user.respository.UserRepository;
-import com.shop.sudal.global.common.LoginResult;
-import com.shop.sudal.global.common.ValidatedResult;
+import com.shop.sudal.global.common.LoginResponse;
+import com.shop.sudal.global.common.ValidatedResponse;
 import com.shop.sudal.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public LoginResult<LoginResponse> loginUser(LoginRequest loginRequest) {
+    public LoginResponse<LoginDto> loginUser(LoginRequest loginRequest) {
         User user = validateEmail(loginRequest.getEmail());
         if (validatePassword(user.getPassword(), loginRequest.getPassword())) {
             String accessToken = jwtUtil.generateAccessToken(user.getEmail());
             String refreshToken = jwtUtil.generateRefreshToken(user.getEmail());
-            return new LoginResult<>(true, new LoginResponse(user), new JwtResponse(accessToken, refreshToken));
+            return new LoginResponse<>(true, new LoginDto(user), new JwtDto(accessToken, refreshToken));
         } else {
-            return new LoginResult<>(false, null, null);
+            return new LoginResponse<>(false, null, null);
         }
     }
 
@@ -42,12 +42,16 @@ public class UserService {
         return passwordEncoder.matches(inputPassword, savedPassword);
     }
 
-    public ValidatedResult<String> joinUser(JoinRequest joinRequest) {
-        if (userRepository.findByEmail(joinRequest.getEmail()).isPresent())
-            throw new RuntimeException("Email already exists");
+    public ValidatedResponse<String> joinUser(JoinRequest joinRequest) {
+        existEmail(joinRequest.getEmail());
 
         joinRequest.encodePassword(passwordEncoder.encode(joinRequest.getPassword()));
-        User saved = userRepository.save(joinRequest.toJoinUser());
-        return new ValidatedResult<>(true, "회원가입이 완료되었습니다. user Id = " + saved.getId());
+        userRepository.save(joinRequest.toJoinUser());
+        return new ValidatedResponse<>(true, "회원가입이 완료되었습니다.");
+    }
+
+    private void existEmail(String email) {
+        if (userRepository.findByEmail(email).isPresent())
+            throw new RuntimeException("Email already exists");
     }
 }

@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ValidatedResponse<T> {
-    private Boolean validated;
+    private Boolean isValidated;
     private T data;
 }

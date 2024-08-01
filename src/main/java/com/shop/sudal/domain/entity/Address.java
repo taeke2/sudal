@@ -1,19 +1,20 @@
 package com.shop.sudal.domain.entity;
 
+import com.shop.sudal.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Address {
+public class Address extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false)
     private String address;
@@ -36,7 +37,7 @@ public class Address {
     private Boolean isDefault;
 
     @Builder
-    public Address(Long id, User user, String address, String addressDetail, String recipientName, String recipientPhone,
+    public Address(Long id, Member member, String address, String addressDetail, String recipientName, String recipientPhone,
                    String zipcode, String deliveryInstructions, Boolean isDefault) {
         if (address == null || address.isEmpty()) throw new IllegalArgumentException("Address cannot be null or empty");
         if (addressDetail == null || addressDetail.isEmpty())
@@ -48,7 +49,7 @@ public class Address {
         if (zipcode == null || zipcode.isEmpty()) throw new IllegalArgumentException("Zipcode cannot be null or empty");
 
         this.id = id;
-        this.user = user;
+        this.member = member;
         this.address = address;
         this.addressDetail = addressDetail;
         this.recipientName = recipientName;

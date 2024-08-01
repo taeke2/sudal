@@ -1,7 +1,7 @@
 package com.shop.sudal.domain.address.model;
 
 import com.shop.sudal.domain.entity.Address;
-import com.shop.sudal.domain.entity.User;
+import com.shop.sudal.domain.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -28,9 +28,9 @@ public class AddressRequest {
 
     private Boolean isDefault;
 
-    public Address toAddressEntity(User user) {
+    public Address toAddressEntity(Member member) {
         return Address.builder()
-                .user(user)
+                .member(member)
                 .address(address)
                 .addressDetail(addressDetail)
                 .recipientName(recipientName)

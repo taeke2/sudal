@@ -1,9 +1,9 @@
-package com.shop.sudal.domain.user.controller;
+package com.shop.sudal.domain.member.controller;
 
-import com.shop.sudal.domain.user.model.JoinRequest;
-import com.shop.sudal.domain.user.model.LoginRequest;
-import com.shop.sudal.domain.user.model.LoginDto;
-import com.shop.sudal.domain.user.service.UserService;
+import com.shop.sudal.domain.member.model.JoinRequest;
+import com.shop.sudal.domain.member.model.LoginRequest;
+import com.shop.sudal.domain.member.model.LoginDto;
+import com.shop.sudal.domain.member.service.MemberService;
 import com.shop.sudal.global.common.response.LoginResponse;
 import com.shop.sudal.global.common.response.ValidatedResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/member")
+public class MemberController {
 
-    private final UserService userService;
+    private final MemberService memberService;
 
     @PostMapping("/login")
     public LoginResponse<LoginDto> login(@RequestBody LoginRequest loginRequest) {
-        return userService.loginUser(loginRequest);
+        return memberService.login(loginRequest);
     }
 
     @PostMapping("/join")
     public ValidatedResponse<String> join(@RequestBody JoinRequest joinRequest) {
-        return userService.joinUser(joinRequest);
+        return memberService.join(joinRequest);
     }
 }

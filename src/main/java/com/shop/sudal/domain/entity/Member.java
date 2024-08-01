@@ -11,18 +11,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class User extends BaseTimeEntity {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String username;
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String email;
@@ -47,11 +46,11 @@ public class User extends BaseTimeEntity {
 
     // build
     @Builder
-    public User(Long id, String username, String email, String password, LocalDate birth, String phone,
-                int gender, Boolean isSuspended, Boolean isDeleted) {
+    public Member(Long id, String name, String email, String password, LocalDate birth, String phone,
+                  int gender, Boolean isSuspended, Boolean isDeleted) {
 
-        if (username == null || username.isEmpty())
-            throw new IllegalArgumentException("Username cannot be null or empty");
+        if (name == null || name.isEmpty())
+            throw new IllegalArgumentException("Member name cannot be null or empty");
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email cannot be null or empty");
         if (password == null || password.isEmpty())
             throw new IllegalArgumentException("Password cannot be null or empty");
@@ -60,7 +59,7 @@ public class User extends BaseTimeEntity {
         if (gender < 1 || gender > 4) throw new IllegalArgumentException("Gender must be between 1 and 4");
 
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.email = email;
         this.password = password;
         this.birth = birth;

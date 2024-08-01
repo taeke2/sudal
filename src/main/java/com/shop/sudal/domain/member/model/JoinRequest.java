@@ -1,6 +1,6 @@
-package com.shop.sudal.domain.user.model;
+package com.shop.sudal.domain.member.model;
 
-import com.shop.sudal.domain.entity.User;
+import com.shop.sudal.domain.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class JoinRequest {
-    private String username;
+    private String name;
     private String email;
     private String password;
     private LocalDate birth;
@@ -20,9 +20,9 @@ public class JoinRequest {
         this.password = encodedPassword;
     }
 
-    public User toJoinUser() {
-        return User.builder()
-                .username(username)
+    public Member toEntityMember() {
+        return Member.builder()
+                .name(name)
                 .email(email)
                 .password(password)
                 .birth(birth)

@@ -19,8 +19,8 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
@@ -39,15 +39,16 @@ public class Order {
     private Double price;
 
     @Builder
-    public Order(User user, Address address, LocalDateTime orderDateTime, String status, Double deliveryPrice, Double price) {
-        if (user == null) throw new IllegalArgumentException("User cannot be null");
+    public Order(Long id, Member member, Address address, LocalDateTime orderDateTime, String status, Double deliveryPrice, Double price) {
+        if (member == null) throw new IllegalArgumentException("Member cannot be null");
         if (address == null) throw new IllegalArgumentException("Address cannot be null");
         if (orderDateTime == null) throw new IllegalArgumentException("OrderDateTime cannot be null");
         if (status == null) throw new IllegalArgumentException("Status cannot be null");
         if (deliveryPrice == null) throw new IllegalArgumentException("DeliveryPrice cannot be null");
         if (price == null) throw new IllegalArgumentException("Price cannot be null");
 
-        this.user = user;
+        this.id = id;
+        this.member = member;
         this.address = address;
         this.orderDate = orderDateTime;
         this.status = status;

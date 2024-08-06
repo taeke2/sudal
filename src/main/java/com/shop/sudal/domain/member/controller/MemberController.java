@@ -1,6 +1,7 @@
 package com.shop.sudal.domain.member.controller;
 
 import com.shop.sudal.domain.member.model.JoinRequest;
+import com.shop.sudal.domain.member.model.JwtDto;
 import com.shop.sudal.domain.member.model.LoginRequest;
 import com.shop.sudal.domain.member.model.LoginDto;
 import com.shop.sudal.domain.member.service.MemberService;
@@ -8,6 +9,7 @@ import com.shop.sudal.global.common.response.LoginResponse;
 import com.shop.sudal.global.common.response.ValidatedResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +30,11 @@ public class MemberController {
     @PostMapping("/join")
     public ValidatedResponse<String> join(@RequestBody JoinRequest joinRequest) {
         return memberService.join(joinRequest);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtDto> refreshAccessToken(@RequestBody JwtDto jwtDto) {
+        JwtDto newToken = memberService.refreshAccessToken(jwtDto.getRefreshToken());
+        return ResponseEntity.ok(newToken);
     }
 }

@@ -2,14 +2,13 @@ package com.shop.sudal.domain.member.service;
 
 import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.domain.entity.MemberToken;
-import com.shop.sudal.domain.member.model.JoinRequest;
-import com.shop.sudal.domain.member.model.JwtDto;
-import com.shop.sudal.domain.member.model.LoginRequest;
-import com.shop.sudal.domain.member.model.LoginDto;
+import com.shop.sudal.domain.member.model.*;
 import com.shop.sudal.domain.member.respository.MemberRepository;
 import com.shop.sudal.domain.member.respository.MemberTokenRepository;
-import com.shop.sudal.global.common.response.LoginResponse;
-import com.shop.sudal.global.common.response.ValidatedResponse;
+import com.shop.sudal.global.common.ResponseCode;
+import com.shop.sudal.global.common.exception.MemberException;
+import com.shop.sudal.domain.member.model.LoginMemberResponse;
+import com.shop.sudal.global.common.exception.TokenException;
 import com.shop.sudal.global.common.service.CommonValidationService;
 import com.shop.sudal.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +26,21 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public LoginResponse<LoginDto> login(LoginRequest loginRequest) {
-        Member member = validationService.validateMemberByEmail(loginRequest.getEmail(),
-                "Member not found with email - " + loginRequest.getEmail());
-        if (validateMemberByPassword(member.getPassword(), loginRequest.getPassword())) {
-            String accessToken = jwtUtil.generateAccessToken(member.getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(member.getEmail());
+    public LoginMemberResponse login(LoginMemberRequest loginMemberRequest) {
+        Member member = validationService.validateMemberByEmail(loginMemberRequest.getEmail());
+
+        if (validateMemberByPassword(member.getPassword(), loginMemberRequest.getPassword())) {
+            String accessToken = jwtUtil.generateAccessToken(member.getId());
+            String refreshToken = jwtUtil.generateRefreshToken(member.getId());
 
             MemberToken memberToken = memberTokenRepository.findByMember(member)
-                    .orElse(new MemberToken(member, refreshToken));
+                    .orElseGet(() -> new MemberTokenDto(member, refreshToken).toEntityMemberToken());
             memberToken.updateRefreshToken(refreshToken);
             memberTokenRepository.save(memberToken);
 
-            return new LoginResponse<>(true, new LoginDto(member), new JwtDto(accessToken, refreshToken));
+            return new LoginMemberResponse(new MemberDto(member), new TokenDto(accessToken, refreshToken));
         } else {
-            return new LoginResponse<>(false, null, null);
+            throw new MemberException(ResponseCode.MEMBER_PASSWORD_INVALID);
         }
     }
 
@@ -49,34 +48,33 @@ public class MemberService {
         return passwordEncoder.matches(inputPassword, savedPassword);
     }
 
-    public ValidatedResponse<String> join(JoinRequest joinRequest) {
-        existMemberByEmail(joinRequest.getEmail());
-
-        joinRequest.encodePassword(passwordEncoder.encode(joinRequest.getPassword()));
-        memberRepository.save(joinRequest.toEntityMember());
-        return new ValidatedResponse<>(true, "회원가입이 완료되었습니다.");
+    public Void join(CreateMemberRequest createMemberRequest) {
+        if (memberRepository.existsMemberByEmail(createMemberRequest.getEmail())) {
+            throw new MemberException(ResponseCode.MEMBER_ALREADY_EXIST);
+        } else {
+            Member member = createMemberRequest.toEntityMember();
+            member.encodePassword(passwordEncoder.encode(createMemberRequest.getPassword()));
+            memberRepository.save(member);
+        }
+        return null;
     }
 
-    private void existMemberByEmail(String email) {
-        if (memberRepository.findByEmail(email).isPresent())
-            throw new RuntimeException("Email already exists");
-    }
-
-    public JwtDto refreshAccessToken(String refreshToken) {
+    public TokenDto refreshAccessToken(TokenDto tokenDto) {
+        String refreshToken = tokenDto.getRefreshToken();
         if (jwtUtil.validateToken(refreshToken)) {
-            String memberId = jwtUtil.getMemberIdFromToken(refreshToken);
-            Member member = validationService.validateMemberByEmail(memberId, "Invalid member");
+            Long memberId = jwtUtil.getMemberIdFromToken(refreshToken);
+            Member member = validationService.validateMemberById(memberId);
             MemberToken memberToken = memberTokenRepository.findByMember(member)
-                    .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
+                    .orElseThrow(() -> new TokenException(ResponseCode.TOKEN_NOT_FOUND));
 
             if (memberToken.getRefreshToken().equals(refreshToken)) {
                 String newAccessToken = jwtUtil.generateAccessToken(memberId);
-                return new JwtDto(newAccessToken, refreshToken);
+                return new TokenDto(newAccessToken, refreshToken);
             } else {
-                throw new RuntimeException("Invalid refresh token");
+                throw new TokenException(ResponseCode.TOKEN_INVALID);
             }
         } else {
-            throw new RuntimeException("Invalid refresh token");
+            throw new TokenException(ResponseCode.TOKEN_INVALID);
         }
     }
 }

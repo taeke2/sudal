@@ -4,7 +4,7 @@ import com.shop.sudal.domain.entity.Member;
 
 public interface CommonValidationService {
 
-    Member validateMemberByEmail(String email, String message);
+    Member validateMemberByEmail(String email);
 
-    Member validateMemberById(Long id, String message);
+    Member validateMemberById(Long id);
 }

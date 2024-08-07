@@ -18,19 +18,19 @@ public class JwtUtil {
     private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 15;   // 15 minutes
     private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 7; // 7 days
 
-    public String generateAccessToken(String memberId) {
+    public String generateAccessToken(Long memberId) {
         return generateToken(memberId, ACCESS_TOKEN_VALIDITY);
     }
 
-    public String generateRefreshToken(String memberId) {
+    public String generateRefreshToken(Long memberId) {
         return generateToken(memberId, REFRESH_TOKEN_VALIDITY);
     }
 
-    private String generateToken(String memberId, long validity) {
+    private String generateToken(Long memberId, long validity) {
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(memberId)
+                .setSubject(String.valueOf(memberId))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + validity))
                 .signWith(SECRET_KEY)
@@ -46,8 +46,8 @@ public class JwtUtil {
         }
     }
 
-    public String getMemberIdFromToken(String token) {
+    public Long getMemberIdFromToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
-        return claims.getSubject();
+        return Long.valueOf(claims.getSubject());
     }
 }

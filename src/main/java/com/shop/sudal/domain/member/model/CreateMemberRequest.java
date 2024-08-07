@@ -7,18 +7,13 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Getter
-@Setter
-public class JoinRequest {
+public class CreateMemberRequest {
     private String name;
     private String email;
     private String password;
     private LocalDate birth;
     private String phone;
     private Integer gender;
-
-    public void encodePassword(String encodedPassword) {
-        this.password = encodedPassword;
-    }
 
     public Member toEntityMember() {
         return Member.builder()

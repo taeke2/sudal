@@ -44,6 +44,10 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isDeleted;
 
+    public void encodePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
     // build
     @Builder
     public Member(Long id, String name, String email, String password, LocalDate birth, String phone,

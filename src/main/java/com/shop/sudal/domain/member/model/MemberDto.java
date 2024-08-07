@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class LoginDto {
+public class MemberDto {
     private Long id;
     private String name;
     private String email;
@@ -16,7 +16,7 @@ public class LoginDto {
     private Boolean isSuspended;
     private Boolean isDeleted;
 
-    public LoginDto(Member member) {
+    public MemberDto(Member member) {
         this.id = member.getId();
         this.name = member.getName();
         this.email = member.getEmail();

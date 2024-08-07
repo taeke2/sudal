@@ -18,7 +18,7 @@ public class AddressService {
 
     @Transactional
     public String addAddress(Long memberId, AddressRequest addressRequest) {
-        Member member = validationService.validateMemberById(memberId, "Member not found with memberId");
+        Member member = validationService.validateMemberById(memberId);
         addressRepository.save(addressRequest.toAddressEntity(member));
         return "Success add Address";
     }

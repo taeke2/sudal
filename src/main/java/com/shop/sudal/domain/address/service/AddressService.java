@@ -17,10 +17,10 @@ public class AddressService {
     private final AddressRepository addressRepository;
 
     @Transactional
-    public String addAddress(Long memberId, AddressRequest addressRequest) {
+    public Void addAddress(Long memberId, AddressRequest addressRequest) {
         Member member = validationService.validateMemberById(memberId);
-        addressRepository.save(addressRequest.toAddressEntity(member));
-        return "Success add Address";
+        addressRepository.save(addressRequest.toEntityAddress(member));
+        return null;
     }
 
 }

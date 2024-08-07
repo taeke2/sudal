@@ -28,7 +28,7 @@ public class AddressRequest {
 
     private Boolean isDefault;
 
-    public Address toAddressEntity(Member member) {
+    public Address toEntityAddress(Member member) {
         return Address.builder()
                 .member(member)
                 .address(address)

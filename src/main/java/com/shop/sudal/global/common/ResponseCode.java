@@ -17,6 +17,7 @@ public enum ResponseCode {
     // 201 Created
     MEMBER_CREATE_SUCCESS(HttpStatus.CREATED, true, "사용자 생성 성공"),
     TOKEN_CREATE_SUCCESS(HttpStatus.CREATED, true, "토큰 재발급 성공"),
+    ADDRESS_CREATE_SUCCESS(HttpStatus.CREATED, true, "주소 생성 성공"),
 
     // 400 Bad Request
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),

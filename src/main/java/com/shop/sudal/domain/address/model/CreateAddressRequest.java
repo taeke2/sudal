@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AddressRequest {
+public class CreateAddressRequest {
 
     @NotBlank(message = "주소가 입력되지 않았습니다")
     private String address;

@@ -2,8 +2,8 @@ package com.shop.sudal.domain.member.controller;
 
 import com.shop.sudal.domain.member.model.*;
 import com.shop.sudal.domain.member.service.MemberService;
-import com.shop.sudal.global.common.ResponseCode;
-import com.shop.sudal.global.common.ResponseCustom;
+import com.shop.sudal.global.common.response.ResponseCode;
+import com.shop.sudal.global.common.response.ResponseCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

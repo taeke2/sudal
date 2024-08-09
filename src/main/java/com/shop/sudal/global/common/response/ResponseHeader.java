@@ -1,4 +1,4 @@
-package com.shop.sudal.global.common;
+package com.shop.sudal.global.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

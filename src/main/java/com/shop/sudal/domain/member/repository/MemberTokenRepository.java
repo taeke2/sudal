@@ -1,4 +1,4 @@
-package com.shop.sudal.domain.member.respository;
+package com.shop.sudal.domain.member.repository;
 
 import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.domain.entity.MemberToken;

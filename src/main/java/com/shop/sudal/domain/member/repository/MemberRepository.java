@@ -1,8 +1,7 @@
-package com.shop.sudal.domain.member.respository;
+package com.shop.sudal.domain.member.repository;
 
 import com.shop.sudal.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

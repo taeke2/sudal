@@ -1,4 +1,4 @@
-package com.shop.sudal.global.common;
+package com.shop.sudal.global.common.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

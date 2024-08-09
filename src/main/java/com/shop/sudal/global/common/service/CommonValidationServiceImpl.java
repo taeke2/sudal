@@ -1,8 +1,8 @@
 package com.shop.sudal.global.common.service;
 
 import com.shop.sudal.domain.entity.Member;
-import com.shop.sudal.domain.member.respository.MemberRepository;
-import com.shop.sudal.global.common.ResponseCode;
+import com.shop.sudal.domain.member.repository.MemberRepository;
+import com.shop.sudal.global.common.response.ResponseCode;
 import com.shop.sudal.global.common.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

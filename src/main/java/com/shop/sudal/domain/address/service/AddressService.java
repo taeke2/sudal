@@ -1,6 +1,6 @@
 package com.shop.sudal.domain.address.service;
 
-import com.shop.sudal.domain.address.model.AddressRequest;
+import com.shop.sudal.domain.address.model.CreateAddressRequest;
 import com.shop.sudal.domain.address.repository.AddressRepository;
 import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.global.common.service.CommonValidationService;
@@ -17,9 +17,9 @@ public class AddressService {
     private final AddressRepository addressRepository;
 
     @Transactional
-    public Void addAddress(Long memberId, AddressRequest addressRequest) {
+    public Void addAddress(Long memberId, CreateAddressRequest createAddressRequest) {
         Member member = validationService.validateMemberById(memberId);
-        addressRepository.save(addressRequest.toEntityAddress(member));
+        addressRepository.save(createAddressRequest.toEntityAddress(member));
         return null;
     }
 

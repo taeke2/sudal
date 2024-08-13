@@ -18,4 +18,14 @@ public class MemberRole {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roles_id")
     private Role role;
+
+    @Builder
+    public MemberRole(Long id, Member member, Role role) {
+        if (member == null) throw new IllegalArgumentException("Member cannot be null");
+        if (role == null) throw new IllegalArgumentException("Role cannot be null");
+
+        this.id = id;
+        this.member = member;
+        this.role = role;
+    }
 }

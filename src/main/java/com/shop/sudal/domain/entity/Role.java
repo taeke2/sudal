@@ -2,6 +2,7 @@ package com.shop.sudal.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,5 +18,13 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private RoleType type;
+    private RoleType roleType;
+
+    @Builder
+    public Role(Long id, RoleType roleType) {
+        if (roleType == null){ throw new IllegalArgumentException("roleType cannot be null");}
+
+        this.id = id;
+        this.roleType = roleType;
+    }
 }

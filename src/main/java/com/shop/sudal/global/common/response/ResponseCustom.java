@@ -12,17 +12,11 @@ public class ResponseCustom<T> {
 
     private ResponseHeader header;
     private T data;
-    private String message;
 
-    private static final int SUCCESS = 200;
-
-    public static <T> ResponseCustom<T> success(T data, String message) {
-        return new ResponseCustom<>(new ResponseHeader(SUCCESS, "SUCCESS"), data, message);
-    }
-
-    public static <T> ResponseCustom<T> fail(ResponseCode responseCode, T data) {
+    public static <T> ResponseCustom<T> response(ResponseCode responseCode, T data) {
         return new ResponseCustom<>(
-                new ResponseHeader(responseCode.getHttpStatusCode(), responseCode.getMessage()), data, responseCode.getMessage()
+                new ResponseHeader(responseCode.getHttpStatusCode(), responseCode.getMessage()),
+                data
         );
     }
 }

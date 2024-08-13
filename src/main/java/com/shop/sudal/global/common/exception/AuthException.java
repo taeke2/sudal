@@ -2,8 +2,8 @@ package com.shop.sudal.global.common.exception;
 
 import com.shop.sudal.global.common.response.ResponseCode;
 
-public class TokenException extends BaseException {
-    public TokenException(ResponseCode responseCode) {
+public class AuthException extends BaseException {
+    public AuthException(ResponseCode responseCode) {
         super(responseCode);
     }
 }

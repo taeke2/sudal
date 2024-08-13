@@ -17,7 +17,7 @@ public class AddressController {
 
     @PostMapping
     public ResponseCustom<Void> addAddress(@PathVariable Long memberId, @RequestBody CreateAddressRequest createAddressRequest) {
-        return ResponseCustom.success(addressService.addAddress(memberId, createAddressRequest), ResponseCode.ADDRESS_CREATE_SUCCESS.getMessage());
+        return ResponseCustom.response(ResponseCode.ADDRESS_CREATE_SUCCESS, addressService.addAddress(memberId, createAddressRequest));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.shop.sudal.domain.member.model;
+package com.shop.sudal.domain.member.member.model;
 
 import com.shop.sudal.domain.entity.Member;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.shop.sudal.domain.entity;
 
+import com.shop.sudal.domain.member.role.model.MemberRoleDto;
 import com.shop.sudal.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,6 +10,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -48,10 +52,34 @@ public class Member extends BaseTimeEntity {
         this.password = encodedPassword;
     }
 
+    // relationship
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberRole> memberRoles = new ArrayList<>();
+
+    public void addRole(Role role) {
+        if (memberRoles == null || memberRoles.isEmpty()) {
+            memberRoles = new ArrayList<>();
+        }
+        MemberRole memberRole = new MemberRoleDto(this, role).toEntityMemberRole();
+        memberRoles.add(memberRole);
+    }
+
+    public List<Role> getRoles() {
+        return memberRoles.stream()
+                .map(MemberRole::getRole)
+                .collect(Collectors.toList());
+    }
+
+    public List<RoleType> getRoleTypes() {
+        return this.getRoles().stream()
+                .map(Role::getRoleType)
+                .collect(Collectors.toList());
+    }
+
     // build
     @Builder
     public Member(Long id, String name, String email, String password, LocalDate birth, String phone,
-                  int gender, Boolean isSuspended, Boolean isDeleted) {
+                  int gender, Boolean isSuspended, Boolean isDeleted, List<MemberRole> memberRoles) {
 
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Member name cannot be null or empty");
@@ -71,6 +99,7 @@ public class Member extends BaseTimeEntity {
         this.gender = gender;
         this.isSuspended = isSuspended;
         this.isDeleted = isDeleted;
+        this.memberRoles = memberRoles;
     }
 
 }

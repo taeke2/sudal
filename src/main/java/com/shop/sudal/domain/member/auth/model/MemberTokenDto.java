@@ -1,15 +1,14 @@
-package com.shop.sudal.domain.member.model;
+package com.shop.sudal.domain.member.auth.model;
 
 import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.domain.entity.MemberToken;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 public class MemberTokenDto {
 
     private Member member;

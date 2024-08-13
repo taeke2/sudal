@@ -1,5 +1,6 @@
 package com.shop.sudal.global.util;
 
+import com.shop.sudal.domain.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,21 +19,22 @@ public class JwtUtil {
     private static final long ACCESS_TOKEN_VALIDITY = 1000 * 60 * 15;   // 15 minutes
     private static final long REFRESH_TOKEN_VALIDITY = 1000 * 60 * 60 * 24 * 7; // 7 days
 
-    public String generateAccessToken(Long memberId) {
-        return generateToken(memberId, ACCESS_TOKEN_VALIDITY);
-    }
-
-    public String generateRefreshToken(Long memberId) {
-        return generateToken(memberId, REFRESH_TOKEN_VALIDITY);
-    }
-
-    private String generateToken(Long memberId, long validity) {
+    public String createAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", member.getRoleTypes());
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(String.valueOf(memberId))
+                .setSubject(String.valueOf(member.getId()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + validity))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY))
+                .signWith(SECRET_KEY)
+                .compact();
+    }
+
+    public String createRefreshToken(Member member) {
+        return Jwts.builder()
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_VALIDITY))
                 .signWith(SECRET_KEY)
                 .compact();
     }

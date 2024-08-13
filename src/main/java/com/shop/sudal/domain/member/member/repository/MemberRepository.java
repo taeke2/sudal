@@ -1,4 +1,4 @@
-package com.shop.sudal.domain.member.repository;
+package com.shop.sudal.domain.member.member.repository;
 
 import com.shop.sudal.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

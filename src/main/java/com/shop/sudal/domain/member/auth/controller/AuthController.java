@@ -2,8 +2,8 @@ package com.shop.sudal.domain.member.auth.controller;
 
 import com.shop.sudal.domain.member.auth.model.TokenDto;
 import com.shop.sudal.domain.member.auth.service.AuthService;
-import com.shop.sudal.domain.member.member.model.LoginMemberRequest;
-import com.shop.sudal.domain.member.member.model.LoginMemberResponse;
+import com.shop.sudal.domain.member.auth.model.LoginMemberRequest;
+import com.shop.sudal.domain.member.auth.model.LoginMemberResponse;
 import com.shop.sudal.global.common.response.ResponseCode;
 import com.shop.sudal.global.common.response.ResponseCustom;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +22,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseCustom<LoginMemberResponse> login(@RequestBody LoginMemberRequest loginMemberRequest) {
-        return ResponseCustom.response(ResponseCode.MEMBER_LOGIN_SUCCESS, authService.login(loginMemberRequest));
+        return ResponseCustom.response(authService.login(loginMemberRequest), ResponseCode.MEMBER_LOGIN_SUCCESS);
     }
 
     @PostMapping("/refresh")
     public ResponseCustom<TokenDto> refreshAccessToken(@RequestBody TokenDto tokenDto) {
-        return ResponseCustom.response(ResponseCode.TOKEN_CREATE_SUCCESS, authService.refreshAccessToken(tokenDto));
+        return ResponseCustom.response(authService.refreshAccessToken(tokenDto), ResponseCode.TOKEN_CREATE_SUCCESS);
     }
 }

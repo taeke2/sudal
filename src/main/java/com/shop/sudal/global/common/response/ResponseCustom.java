@@ -13,7 +13,7 @@ public class ResponseCustom<T> {
     private ResponseHeader header;
     private T data;
 
-    public static <T> ResponseCustom<T> response(ResponseCode responseCode, T data) {
+    public static <T> ResponseCustom<T> response(T data, ResponseCode responseCode) {
         return new ResponseCustom<>(
                 new ResponseHeader(responseCode.getHttpStatusCode(), responseCode.getMessage()),
                 data

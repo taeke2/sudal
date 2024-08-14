@@ -1,4 +1,4 @@
-package com.shop.sudal.domain.member.member.model;
+package com.shop.sudal.domain.member.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;

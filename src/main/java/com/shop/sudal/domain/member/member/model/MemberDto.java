@@ -1,15 +1,15 @@
 package com.shop.sudal.domain.member.member.model;
 
 import com.shop.sudal.domain.entity.Member;
-import com.shop.sudal.domain.entity.Role;
 import com.shop.sudal.domain.entity.RoleType;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Data
+@Getter
+@AllArgsConstructor
 public class MemberDto {
     private Long id;
     private String name;

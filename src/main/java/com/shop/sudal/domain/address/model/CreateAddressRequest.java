@@ -4,9 +4,13 @@ import com.shop.sudal.domain.entity.Address;
 import com.shop.sudal.domain.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateAddressRequest {
 
     @NotBlank(message = "주소가 입력되지 않았습니다")

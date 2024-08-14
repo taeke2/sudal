@@ -20,7 +20,7 @@ public class MemberController {
 
     @PostMapping("/join")
     public ResponseCustom<Void> join(@RequestBody CreateMemberRequest createMemberRequest) {
-        return ResponseCustom.response(ResponseCode.MEMBER_CREATE_SUCCESS, memberService.join(createMemberRequest));
+        return ResponseCustom.response(memberService.join(createMemberRequest), ResponseCode.MEMBER_CREATE_SUCCESS);
     }
 
 }

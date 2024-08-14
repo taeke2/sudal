@@ -23,14 +23,17 @@ public enum ResponseCode {
 
     // 400 Bad Request
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),
+    INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, false, "입력값이 유효하지 않습니다."),
+    DUPLICATE_INPUT_VALUE(HttpStatus.BAD_REQUEST, false, "중복된 입력값입니다."),
 
     // 401 Unauthorized
     MEMBER_PASSWORD_INVALID(HttpStatus.UNAUTHORIZED, false, "비밀번호가 일치하지 않습니다."),
     TOKEN_INVALID(HttpStatus.UNAUTHORIZED, false, "유효하지 않은 토큰입니다."),
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, false, "토큰이 만료되었습니다."),
+    UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, false, "인증이 필요합니다."),
 
     // 403 Forbidden
-    FORBIDDEN(HttpStatus.FORBIDDEN, false, "권한이 없습니다."),
+    ACCESS_FORBIDDEN(HttpStatus.FORBIDDEN, false, "접근 권한이 없습니다."),
 
     // 404 Not Found
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자를 찾을 수 없습니다."),

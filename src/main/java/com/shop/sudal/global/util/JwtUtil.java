@@ -21,7 +21,6 @@ public class JwtUtil {
 
     public String createAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", member.getRoleTypes());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(String.valueOf(member.getId()))
@@ -31,7 +30,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String createRefreshToken(Member member) {
+    public String createRefreshToken() {
         return Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_VALIDITY))
@@ -49,7 +48,10 @@ public class JwtUtil {
     }
 
     public Long getMemberIdFromToken(String token) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
-        return Long.valueOf(claims.getSubject());
+        return Long.valueOf(parseClaims(token).getSubject());
+    }
+
+    private static Claims parseClaims(String token) {
+        return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
     }
 }

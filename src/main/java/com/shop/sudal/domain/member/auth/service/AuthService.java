@@ -2,16 +2,16 @@ package com.shop.sudal.domain.member.auth.service;
 
 import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.domain.entity.MemberToken;
+import com.shop.sudal.domain.member.auth.model.LoginMemberRequest;
+import com.shop.sudal.domain.member.auth.model.LoginMemberResponse;
 import com.shop.sudal.domain.member.auth.model.MemberTokenDto;
 import com.shop.sudal.domain.member.auth.model.TokenDto;
 import com.shop.sudal.domain.member.auth.repository.AuthRepository;
-import com.shop.sudal.domain.member.member.model.LoginMemberRequest;
-import com.shop.sudal.domain.member.member.model.LoginMemberResponse;
 import com.shop.sudal.domain.member.member.model.MemberDto;
-import com.shop.sudal.global.common.exception.AuthException;
-import com.shop.sudal.global.common.exception.MemberException;
-import com.shop.sudal.global.common.response.ResponseCode;
 import com.shop.sudal.global.common.ValidationService;
+import com.shop.sudal.global.common.response.ResponseCode;
+import com.shop.sudal.global.exception.AuthException;
+import com.shop.sudal.global.exception.MemberException;
 import com.shop.sudal.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class AuthService {
 
         if (validateMemberByPassword(member.getPassword(), loginMemberRequest.getPassword())) {
             String accessToken = jwtUtil.createAccessToken(member);
-            String refreshToken = jwtUtil.createRefreshToken(member);
+            String refreshToken = jwtUtil.createRefreshToken();
 
             MemberToken memberToken = authRepository.findByMember(member)
                     .orElseGet(() -> new MemberTokenDto(member, refreshToken).toEntityMemberToken());

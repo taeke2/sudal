@@ -1,4 +1,4 @@
-package com.shop.sudal.global.common.exception;
+package com.shop.sudal.global.exception;
 
 import com.shop.sudal.global.common.response.ResponseCode;
 import lombok.AllArgsConstructor;

@@ -27,7 +27,7 @@ public class MemberService {
     private final RoleRepository roleRepository;
     private final ValidationService validationService;
 
-    public Void join(CreateMemberRequest createMemberRequest) {
+    public void join(CreateMemberRequest createMemberRequest) {
         if (memberRepository.existsMemberByEmail(createMemberRequest.getEmail())) {
             throw new MemberException(ResponseCode.MEMBER_ALREADY_EXIST);
         }
@@ -41,22 +41,17 @@ public class MemberService {
         member.addRole(role);
 
         memberRepository.save(member);
-
-        return null;
     }
 
-    public Void addMemberRole(AddMemberRoleRequest addMemberRoleRequest) {
+    public void addMemberRole(AddMemberRoleRequest addMemberRoleRequest) {
         Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
         RoleType roleType = RoleType.valueOf(addMemberRoleRequest.getRole());
-        if (!member.getRoleTypes().contains(roleType)) {
-            Role role = roleRepository.findByRoleType(roleType)
-                    .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
-            member.addRole(role);
-        } else {
+        if (member.getRoleTypes().contains(roleType))
             throw new MemberException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
-        }
-        return null;
+        Role role = roleRepository.findByRoleType(roleType)
+                .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
+        member.addRole(role);
     }
 
     // TODO: DB 적용 후 삭제

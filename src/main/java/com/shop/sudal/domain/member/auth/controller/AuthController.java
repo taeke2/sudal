@@ -29,6 +29,7 @@ public class AuthController {
 
     @DeleteMapping("/logout")
     public ResponseCustom<Void> logout() {
-        return ResponseCustom.response(authService.logout(), ResponseCode.MEMBER_LOGOUT_SUCCESS);
+        authService.logout();
+        return ResponseCustom.responseNoData(ResponseCode.MEMBER_LOGOUT_SUCCESS);
     }
 }

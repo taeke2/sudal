@@ -22,12 +22,14 @@ public class MemberController {
 
     @PostMapping("/join")
     public ResponseCustom<Void> join(@RequestBody CreateMemberRequest createMemberRequest) {
-        return ResponseCustom.response(memberService.join(createMemberRequest), ResponseCode.MEMBER_CREATE_SUCCESS);
+        memberService.join(createMemberRequest);
+        return ResponseCustom.responseNoData(ResponseCode.MEMBER_CREATE_SUCCESS);
     }
 
     @PostMapping("/role")
     @Secured("ROLE_ADMIN")
     public ResponseCustom<Void> addMemberRole(@RequestBody AddMemberRoleRequest addMemberRoleRequest) {
-        return ResponseCustom.response(memberService.addMemberRole(addMemberRoleRequest), ResponseCode.ROLE_ADD_SUCCESS);
+        memberService.addMemberRole(addMemberRoleRequest);
+        return ResponseCustom.responseNoData(ResponseCode.ROLE_ADD_SUCCESS);
     }
 }

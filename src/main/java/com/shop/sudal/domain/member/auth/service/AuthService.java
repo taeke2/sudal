@@ -70,12 +70,11 @@ public class AuthService {
         }
     }
 
-    public Void logout() {
+    public void logout() {
         Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
         MemberToken memberToken = authRepository.findByMember(member)
                 .orElseThrow(() -> new AuthException(ResponseCode.TOKEN_NOT_FOUND));
         authRepository.delete(memberToken);
-        return null;
     }
 }

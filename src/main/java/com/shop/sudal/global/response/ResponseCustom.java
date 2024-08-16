@@ -16,4 +16,8 @@ public class ResponseCustom<T> {
     public static <T> ResponseCustom<T> response(T data, ResponseCode responseCode) {
         return new ResponseCustom<>(new ResponseHeader(responseCode), data);
     }
+
+    public static <T> ResponseCustom<T> responseNoData(ResponseCode responseCode) {
+        return new ResponseCustom<>(new ResponseHeader(responseCode), null);
+    }
 }

@@ -16,13 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoleService {
     private final RoleRepository roleRepository;
 
-    public Void createRole(CreateRoleRequest createRoleRequest) {
+    public void createRole(CreateRoleRequest createRoleRequest) {
         if(roleRepository.existsByRoleType(RoleType.valueOf(createRoleRequest.getRole()))){
             throw new RoleException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
         }
-
         roleRepository.save(createRoleRequest.toEntityRole());
-
-        return null;
     }
 }

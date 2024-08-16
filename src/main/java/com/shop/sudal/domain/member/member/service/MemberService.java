@@ -13,7 +13,6 @@ import com.shop.sudal.global.exception.RoleException;
 import com.shop.sudal.global.response.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,9 +45,8 @@ public class MemberService {
         return null;
     }
 
-    @Secured("ROLE_ADMIN")
     public Void addMemberRole(AddMemberRoleRequest addMemberRoleRequest) {
-        Long memberId = validationService.validateMemberIdByToken();
+        Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
         RoleType roleType = RoleType.valueOf(addMemberRoleRequest.getRole());
         if (!member.getRoleTypes().contains(roleType)) {

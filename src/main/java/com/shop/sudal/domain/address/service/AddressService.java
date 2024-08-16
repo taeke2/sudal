@@ -18,7 +18,7 @@ public class AddressService {
     private final AddressRepository addressRepository;
 
     public Void createAddress(CreateAddressRequest createAddressRequest) {
-        Long memberId = validationService.validateMemberIdByToken();
+        Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
         addressRepository.save(createAddressRequest.toEntityAddress(member));
         return null;

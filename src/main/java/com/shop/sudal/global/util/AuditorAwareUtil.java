@@ -1,6 +1,8 @@
 package com.shop.sudal.global.util;
 
-import com.shop.sudal.domain.entity.Member;
+import com.shop.sudal.domain.member.auth.model.MemberDetails;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
@@ -8,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class AuditorAwareUtil implements AuditorAware<Long> {
 
     @Override
@@ -16,8 +19,8 @@ public class AuditorAwareUtil implements AuditorAware<Long> {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
-                .filter(principal -> principal instanceof Member)
-                .map(principle -> ((Member) principle).getId());
+                .filter(principal -> principal instanceof MemberDetails)
+                .map(principle -> ((MemberDetails) principle).getAuthMemberDto().getId());
     }
 
 //    @Override
@@ -29,7 +32,7 @@ public class AuditorAwareUtil implements AuditorAware<Long> {
 //        }
 //
 //        // Assuming that the principal is of type Member and contains the ID
-//        Member member = (Member) authentication.getPrincipal();
-//        return Optional.ofNullable(member.getId());
+//        MemberDetails member = (MemberDetails) authentication.getPrincipal();
+//        return Optional.ofNullable(member.getAuthMemberDto().getId());
 //    }
 }

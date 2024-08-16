@@ -19,8 +19,8 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @Secured({"ROLE_MEMBER"})
     @PostMapping
+    @Secured({"ROLE_MEMBER"})
     public ResponseCustom<Void> createAddress(@RequestBody CreateAddressRequest createAddressRequest) {
         return ResponseCustom.response(addressService.createAddress(createAddressRequest), ResponseCode.ADDRESS_CREATE_SUCCESS);
     }

@@ -7,8 +7,11 @@ import com.shop.sudal.global.response.ResponseCode;
 import com.shop.sudal.global.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -26,8 +29,12 @@ public class ValidationService {
                 .orElseThrow(() -> new MemberException(ResponseCode.MEMBER_NOT_FOUND));
     }
 
-    public Long validateMemberIdByToken() {
-        MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return memberDetails.getAuthMemberDto().getId();
+    public Long validateMemberIdByAuth() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .filter(Authentication::isAuthenticated)
+                .map(Authentication::getPrincipal)
+                .filter(principal -> principal instanceof MemberDetails)
+                .map(principle -> ((MemberDetails) principle).getAuthMemberDto().getId())
+                .orElseThrow(() -> new MemberException(ResponseCode.AUTHENTICATION_INVALID));
     }
 }

@@ -1,6 +1,5 @@
 package com.shop.sudal.domain.entity;
 
-import com.shop.sudal.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

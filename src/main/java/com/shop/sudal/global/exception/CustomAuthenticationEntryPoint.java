@@ -1,6 +1,6 @@
 package com.shop.sudal.global.exception;
 
-import com.shop.sudal.global.common.response.ResponseCode;
+import com.shop.sudal.global.response.ResponseCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +18,11 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         ResponseCode responseCode = ResponseCode.UNAUTHORIZED_ACCESS;
         response.setStatus(responseCode.getHttpStatusCode());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write("{\"success\": " + responseCode.getIsSuccess() + ", \"error\": \"" + responseCode.getMessage() + "\"}");
+        response.getWriter().write(
+                "{ \"code\": " + responseCode.getHttpStatusCode() +
+                        ", \"isSuccess\": " + responseCode.getIsSuccess() +
+                        ", \"error\": \"" + responseCode.getMessage() + "\"}"
+        );
+
     }
 }

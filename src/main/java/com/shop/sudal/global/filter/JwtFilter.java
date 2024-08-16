@@ -31,10 +31,8 @@ public class JwtFilter extends OncePerRequestFilter {
             UserDetails userDetails = memberDetailsService.loadUserByUsername(memberId.toString());
 
             if (userDetails != null) {
-                //UserDetsils, Password, Role -> 접근권한 인증 Token 생성
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                //현재 Request의 Security Context에 접근권한 설정
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

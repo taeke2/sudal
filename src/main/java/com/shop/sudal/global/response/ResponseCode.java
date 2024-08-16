@@ -1,4 +1,4 @@
-package com.shop.sudal.global.common.response;
+package com.shop.sudal.global.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,45 +9,47 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ResponseCode {
 
-    // 200 OK
+    // 200 OK (조회)
     MEMBER_READ_SUCCESS(HttpStatus.OK, true, "사용자 정보 조회 성공"),
     MEMBER_LOGIN_SUCCESS(HttpStatus.OK, true, "사용자 로그인 성공"),
 
-    // 201 Created
+    // 201 Created (생성[추가])
     MEMBER_CREATE_SUCCESS(HttpStatus.CREATED, true, "사용자 생성 성공"),
     TOKEN_CREATE_SUCCESS(HttpStatus.CREATED, true, "토큰 재발급 성공"),
     ADDRESS_CREATE_SUCCESS(HttpStatus.CREATED, true, "주소 생성 성공"),
+    ROLE_ADD_SUCCESS(HttpStatus.CREATED, true, "권한 추가 성공"),
 
-    // 204 No Content
+    // 204 No Content (수정)
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),
 
-    // 400 Bad Request
+    // 400 Bad Request (잘못된 요청)
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, false, "입력값이 유효하지 않습니다."),
     DUPLICATE_INPUT_VALUE(HttpStatus.BAD_REQUEST, false, "중복된 입력값입니다."),
 
-    // 401 Unauthorized
+    // 401 Unauthorized (인증 불가)
     MEMBER_PASSWORD_INVALID(HttpStatus.UNAUTHORIZED, false, "비밀번호가 일치하지 않습니다."),
     TOKEN_INVALID(HttpStatus.UNAUTHORIZED, false, "유효하지 않은 토큰입니다."),
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, false, "토큰이 만료되었습니다."),
     UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, false, "인증이 필요합니다."),
 
-    // 403 Forbidden
+    // 403 Forbidden (권한 없음)
     ACCESS_FORBIDDEN(HttpStatus.FORBIDDEN, false, "접근 권한이 없습니다."),
 
-    // 404 Not Found
+    // 404 Not Found (존재하지 않음)
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자를 찾을 수 없습니다."),
     TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 토큰이 존재하지 않습니다."),
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 권한이 존재하지 않습니다."),
 
-    // 405 Method Not Allowed
+    // 405 Method Not Allowed (허용되지 않음)
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, false, "허용되지 않은 메소드입니다."),
 
-    // 409 Conflict
+    // 409 Conflict (중복)
     MEMBER_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 가입한 사용자입니다."),
     MEMBER_NAME_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 닉네임입니다."),
+    MEMBER_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 해당 권한이 존재합니다."),
 
-    // 500 Internal Server Error
+    // 500 Internal Server Error (서버 오류)
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, "서버에 오류가 발생하였습니다.");
 
     private final HttpStatus httpStatus;

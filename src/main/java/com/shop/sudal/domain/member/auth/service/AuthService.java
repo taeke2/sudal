@@ -9,7 +9,7 @@ import com.shop.sudal.domain.member.auth.model.TokenDto;
 import com.shop.sudal.domain.member.auth.repository.AuthRepository;
 import com.shop.sudal.domain.member.member.model.MemberDto;
 import com.shop.sudal.global.common.ValidationService;
-import com.shop.sudal.global.common.response.ResponseCode;
+import com.shop.sudal.global.response.ResponseCode;
 import com.shop.sudal.global.exception.AuthException;
 import com.shop.sudal.global.exception.MemberException;
 import com.shop.sudal.global.util.JwtUtil;

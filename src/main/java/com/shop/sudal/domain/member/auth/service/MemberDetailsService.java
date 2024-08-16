@@ -4,7 +4,7 @@ import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.domain.member.auth.model.AuthMemberDto;
 import com.shop.sudal.domain.member.auth.model.MemberDetails;
 import com.shop.sudal.domain.member.member.repository.MemberRepository;
-import com.shop.sudal.global.common.response.ResponseCode;
+import com.shop.sudal.global.response.ResponseCode;
 import com.shop.sudal.global.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.shop.sudal.global.common.entity;
+package com.shop.sudal.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

@@ -1,6 +1,6 @@
 package com.shop.sudal.global.exception;
 
-import com.shop.sudal.global.common.response.ResponseCode;
+import com.shop.sudal.global.response.ResponseCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

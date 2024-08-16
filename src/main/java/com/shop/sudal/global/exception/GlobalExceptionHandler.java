@@ -1,6 +1,6 @@
 package com.shop.sudal.global.exception;
 
-import com.shop.sudal.global.common.response.ResponseCustom;
+import com.shop.sudal.global.response.ResponseCustom;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

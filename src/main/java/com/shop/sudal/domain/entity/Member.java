@@ -1,7 +1,6 @@
 package com.shop.sudal.domain.entity;
 
 import com.shop.sudal.domain.member.role.model.MemberRoleDto;
-import com.shop.sudal.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

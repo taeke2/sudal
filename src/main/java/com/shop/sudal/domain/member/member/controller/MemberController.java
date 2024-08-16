@@ -1,15 +1,13 @@
 package com.shop.sudal.domain.member.member.controller;
 
+import com.shop.sudal.domain.member.member.model.AddRoleRequest;
 import com.shop.sudal.domain.member.member.model.CreateMemberRequest;
 import com.shop.sudal.domain.member.member.service.MemberService;
-import com.shop.sudal.global.common.response.ResponseCode;
-import com.shop.sudal.global.common.response.ResponseCustom;
+import com.shop.sudal.global.response.ResponseCode;
+import com.shop.sudal.global.response.ResponseCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -23,4 +21,8 @@ public class MemberController {
         return ResponseCustom.response(memberService.join(createMemberRequest), ResponseCode.MEMBER_CREATE_SUCCESS);
     }
 
+    @PostMapping("/role")
+    public ResponseCustom<Void> addMemberRole(@RequestBody AddRoleRequest addRoleRequest) {
+        return ResponseCustom.response(memberService.addMemberRole(addRoleRequest), ResponseCode.ROLE_ADD_SUCCESS);
+    }
 }

@@ -3,7 +3,7 @@ package com.shop.sudal.domain.member.member.service;
 import com.shop.sudal.domain.entity.Member;
 import com.shop.sudal.domain.entity.Role;
 import com.shop.sudal.domain.entity.RoleType;
-import com.shop.sudal.domain.member.member.model.AddRoleRequest;
+import com.shop.sudal.domain.member.member.model.AddMemberRoleRequest;
 import com.shop.sudal.domain.member.member.model.CreateMemberRequest;
 import com.shop.sudal.domain.member.member.repository.MemberRepository;
 import com.shop.sudal.domain.member.role.repository.RoleRepository;
@@ -31,25 +31,26 @@ public class MemberService {
     public Void join(CreateMemberRequest createMemberRequest) {
         if (memberRepository.existsMemberByEmail(createMemberRequest.getEmail())) {
             throw new MemberException(ResponseCode.MEMBER_ALREADY_EXIST);
-        } else {
-            Member member = createMemberRequest.toEntityMember();
-            member.encodePassword(passwordEncoder.encode(createMemberRequest.getPassword()));
-
-            Role role = roleRepository.findByRoleType(RoleType.MEMBER)
-                    .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
-
-            member.addRole(role);
-
-            memberRepository.save(member);
         }
+
+        Member member = createMemberRequest.toEntityMember();
+        member.encodePassword(passwordEncoder.encode(createMemberRequest.getPassword()));
+
+        Role role = roleRepository.findByRoleType(RoleType.MEMBER)
+                .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
+
+        member.addRole(role);
+
+        memberRepository.save(member);
+
         return null;
     }
 
     @Secured("ROLE_ADMIN")
-    public Void addMemberRole(AddRoleRequest addRoleRequest) {
+    public Void addMemberRole(AddMemberRoleRequest addMemberRoleRequest) {
         Long memberId = validationService.validateMemberIdByToken();
         Member member = validationService.validateMemberById(memberId);
-        RoleType roleType = RoleType.valueOf(addRoleRequest.getRole());
+        RoleType roleType = RoleType.valueOf(addMemberRoleRequest.getRole());
         if (!member.getRoleTypes().contains(roleType)) {
             Role role = roleRepository.findByRoleType(roleType)
                     .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
@@ -58,6 +59,18 @@ public class MemberService {
             throw new MemberException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
         }
         return null;
+    }
+
+    // TODO: DB 적용 후 삭제
+    public void testAddMemberRole(Long memberId, RoleType roleType) {
+        Member member = validationService.validateMemberById(memberId);
+        if (!member.getRoleTypes().contains(roleType)) {
+            Role role = roleRepository.findByRoleType(roleType)
+                    .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
+            member.addRole(role);
+        } else {
+            throw new MemberException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
+        }
     }
 
 }

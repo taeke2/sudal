@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AddRoleRequest {
+public class AddMemberRoleRequest {
     private String role;
 }

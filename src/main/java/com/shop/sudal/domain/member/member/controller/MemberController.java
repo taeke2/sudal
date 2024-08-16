@@ -1,6 +1,6 @@
 package com.shop.sudal.domain.member.member.controller;
 
-import com.shop.sudal.domain.member.member.model.AddRoleRequest;
+import com.shop.sudal.domain.member.member.model.AddMemberRoleRequest;
 import com.shop.sudal.domain.member.member.model.CreateMemberRequest;
 import com.shop.sudal.domain.member.member.service.MemberService;
 import com.shop.sudal.global.response.ResponseCode;
@@ -22,7 +22,7 @@ public class MemberController {
     }
 
     @PostMapping("/role")
-    public ResponseCustom<Void> addMemberRole(@RequestBody AddRoleRequest addRoleRequest) {
-        return ResponseCustom.response(memberService.addMemberRole(addRoleRequest), ResponseCode.ROLE_ADD_SUCCESS);
+    public ResponseCustom<Void> addMemberRole(@RequestBody AddMemberRoleRequest addMemberRoleRequest) {
+        return ResponseCustom.response(memberService.addMemberRole(addMemberRoleRequest), ResponseCode.ROLE_ADD_SUCCESS);
     }
 }

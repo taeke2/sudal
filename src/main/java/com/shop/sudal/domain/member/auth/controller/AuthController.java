@@ -8,10 +8,7 @@ import com.shop.sudal.global.response.ResponseCode;
 import com.shop.sudal.global.response.ResponseCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -28,5 +25,10 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseCustom<TokenDto> refreshAccessToken(@RequestBody TokenDto tokenDto) {
         return ResponseCustom.response(authService.refreshAccessToken(tokenDto), ResponseCode.TOKEN_CREATE_SUCCESS);
+    }
+
+    @DeleteMapping("/logout")
+    public ResponseCustom<Void> logout() {
+        return ResponseCustom.response(authService.logout(), ResponseCode.MEMBER_LOGOUT_SUCCESS);
     }
 }

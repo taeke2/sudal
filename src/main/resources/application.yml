@@ -2,14 +2,14 @@ spring:
   application:
     name: sudal
   datasource:
-    url: jdbc:h2:tcp://localhost/~/sudal
-    username: sa
-    password: 1
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/sudal
+    username: taek2
+    password: tjdxor137!
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
 #        show_sql: true

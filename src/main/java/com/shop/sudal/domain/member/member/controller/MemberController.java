@@ -38,4 +38,11 @@ public class MemberController {
     public ResponseCustom<List<MemberDto>> getMemberList() {
         return ResponseCustom.response(memberService.getMemberList(), ResponseCode.MEMBER_LIST_READ_SUCCESS);
     }
+
+    @DeleteMapping
+    @Secured({"ROLE_MEMBER"})
+    public ResponseCustom<Void> deleteMember() {
+        memberService.deleteMember();
+        return ResponseCustom.responseNoData(ResponseCode.MEMBER_DELETE_SUCCESS);
+    }
 }

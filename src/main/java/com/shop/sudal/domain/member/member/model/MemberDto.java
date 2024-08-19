@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,8 @@ public class MemberDto {
     private Boolean isSuspended;
     private Boolean isDeleted;
     private List<RoleType> roles;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 
     public MemberDto(Member member) {
         this.id = member.getId();
@@ -31,5 +34,7 @@ public class MemberDto {
         this.isSuspended = member.getIsSuspended();
         this.isDeleted = member.getIsDeleted();
         this.roles = member.getRoleTypes();
+        this.createAt = member.getCreatedAt();
+        this.updateAt = member.getUpdatedAt();
     }
 }

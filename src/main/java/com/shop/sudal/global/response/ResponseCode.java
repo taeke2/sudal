@@ -25,6 +25,7 @@ public enum ResponseCode {
     // 204 No Content (수정)
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),
     MEMBER_LOGOUT_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 로그아웃 성공"),
+    MEMBER_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 회원탈퇴 성공"),
 
     // 400 Bad Request (잘못된 요청)
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),

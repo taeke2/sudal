@@ -7,10 +7,8 @@ import com.shop.sudal.domain.member.member.model.AddMemberRoleRequest;
 import com.shop.sudal.domain.member.member.model.CreateMemberRequest;
 import com.shop.sudal.domain.member.member.model.MemberDto;
 import com.shop.sudal.domain.member.member.repository.MemberRepository;
-import com.shop.sudal.domain.member.role.repository.RoleRepository;
 import com.shop.sudal.global.common.ValidationService;
 import com.shop.sudal.global.exception.MemberException;
-import com.shop.sudal.global.exception.RoleException;
 import com.shop.sudal.global.response.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +25,16 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
     private final ValidationService validationService;
 
     public void signup(CreateMemberRequest createMemberRequest) {
-        if (memberRepository.existsMemberByEmail(createMemberRequest.getEmail())) {
+        if (memberRepository.existsMemberByEmail(createMemberRequest.getEmail()))
             throw new MemberException(ResponseCode.MEMBER_ALREADY_EXIST);
-        }
 
         Member member = createMemberRequest.toEntityMember();
         member.encodePassword(passwordEncoder.encode(createMemberRequest.getPassword()));
 
-        Role role = roleRepository.findByRoleType(RoleType.MEMBER)
-                .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
+        Role role = validationService.validateRoleByRoleType(RoleType.MEMBER);
 
         member.addRole(role);
 
@@ -52,8 +47,7 @@ public class MemberService {
         RoleType roleType = addMemberRoleRequest.getRole();
         if (member.getRoleTypes().contains(roleType))
             throw new MemberException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
-        Role role = roleRepository.findByRoleType(roleType)
-                .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
+        Role role = validationService.validateRoleByRoleType(roleType);
         member.addRole(role);
     }
 
@@ -61,12 +55,10 @@ public class MemberService {
         return memberRepository.getMemberList();
     }
 
-    // TODO: DB 적용 후 삭제
-    public void testAddMemberRole(Long memberId, RoleType roleType) {
+    public void deleteMember() {
+        Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
-        Role role = roleRepository.findByRoleType(roleType)
-                .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
-        member.addRole(role);
+        member.deleteMember();
     }
 
 }

@@ -19,6 +19,7 @@ public class MemberRepositoryImpl implements MemberRepositoryQdsl{
     public List<MemberDto> getMemberList() {
         return queryFactory.select(Projections.constructor(MemberDto.class, member))
                 .from(member)
+                .where(member.isDeleted.eq(false))
                 .fetch();
     }
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +48,8 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isDeleted;
 
+    private LocalDateTime deleteAt;
+
     public void encodePassword(String encodedPassword) {
         this.password = encodedPassword;
     }
@@ -55,6 +58,7 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRole> memberRoles = new ArrayList<>();
 
+    // function
     public void addRole(Role role) {
         if (memberRoles == null || memberRoles.isEmpty()) {
             memberRoles = new ArrayList<>();
@@ -75,10 +79,15 @@ public class Member extends BaseTimeEntity {
                 .collect(Collectors.toList());
     }
 
+    public void deleteMember() {
+        this.isDeleted = true;
+        this.deleteAt = LocalDateTime.now();
+    }
+
     // build
     @Builder
     public Member(Long id, String name, String email, String password, LocalDate birth, String phone,
-                  int gender, Boolean isSuspended, Boolean isDeleted, List<MemberRole> memberRoles) {
+                  int gender, Boolean isSuspended, Boolean isDeleted, LocalDateTime deleteAt, List<MemberRole> memberRoles) {
 
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Member name cannot be null or empty");
@@ -98,6 +107,7 @@ public class Member extends BaseTimeEntity {
         this.gender = gender;
         this.isSuspended = isSuspended;
         this.isDeleted = isDeleted;
+        this.deleteAt = deleteAt;
         this.memberRoles = memberRoles;
     }
 

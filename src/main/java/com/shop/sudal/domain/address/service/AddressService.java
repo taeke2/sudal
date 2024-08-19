@@ -44,12 +44,6 @@ public class AddressService {
         addressRepository.save(address);
     }
 
-    // TODO: DB 적용 후 삭제
-    public void testCreateAddress(Long memberId, CreateAddressRequest createAddressRequest) {
-        Member member = validationService.validateMemberById(memberId);
-        addressRepository.save(createAddressRequest.toEntityAddress(member));
-    }
-
     public List<AddressDto> getAddressList() {
         Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);

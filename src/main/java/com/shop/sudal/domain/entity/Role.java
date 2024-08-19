@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "roles")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Role {
+public class Role extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Role {
 
     @Builder
     public Role(Long id, RoleType roleType) {
-        if (roleType == null){ throw new IllegalArgumentException("roleType cannot be null");}
+        if (roleType == null) throw new IllegalArgumentException("roleType cannot be null");
 
         this.id = id;
         this.roleType = roleType;

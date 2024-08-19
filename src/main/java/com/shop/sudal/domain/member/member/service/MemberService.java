@@ -49,7 +49,7 @@ public class MemberService {
     public void addMemberRole(AddMemberRoleRequest addMemberRoleRequest) {
         Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
-        RoleType roleType = RoleType.valueOf(addMemberRoleRequest.getRole());
+        RoleType roleType = addMemberRoleRequest.getRole();
         if (member.getRoleTypes().contains(roleType))
             throw new MemberException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
         Role role = roleRepository.findByRoleType(roleType)

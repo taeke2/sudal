@@ -18,6 +18,7 @@ public enum ResponseCode {
     MEMBER_CREATE_SUCCESS(HttpStatus.CREATED, true, "사용자 생성 성공"),
     TOKEN_CREATE_SUCCESS(HttpStatus.CREATED, true, "토큰 재발급 성공"),
     ADDRESS_CREATE_SUCCESS(HttpStatus.CREATED, true, "주소 생성 성공"),
+    ROLE_CREATE_SUCCESS(HttpStatus.CREATED, true, "권한 생성 성공"),
     ROLE_ADD_SUCCESS(HttpStatus.CREATED, true, "권한 추가 성공"),
 
     // 204 No Content (수정)
@@ -33,7 +34,7 @@ public enum ResponseCode {
     MEMBER_PASSWORD_INVALID(HttpStatus.UNAUTHORIZED, false, "비밀번호가 일치하지 않습니다."),
     TOKEN_INVALID(HttpStatus.UNAUTHORIZED, false, "유효하지 않은 토큰입니다."),
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, false, "토큰이 만료되었습니다."),
-    UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, false, "인증에 실패하였습니다."),
+    UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, false, "인증되지 않은 사용자입니다."),
     AUTHENTICATION_INVALID(HttpStatus.UNAUTHORIZED, false, "잘못된 인증정보입니다."),
 
     // 403 Forbidden (권한 없음)
@@ -41,8 +42,8 @@ public enum ResponseCode {
 
     // 404 Not Found (존재하지 않음)
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자를 찾을 수 없습니다."),
-    TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 토큰이 존재하지 않습니다."),
-    ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 권한이 존재하지 않습니다."),
+    TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자의 토큰을 찾을 수 없습니다."),
+    ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 권한을 찾을 수 없습니다."),
 
     // 405 Method Not Allowed (허용되지 않음)
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, false, "허용되지 않은 메소드입니다."),
@@ -50,10 +51,11 @@ public enum ResponseCode {
     // 409 Conflict (중복)
     MEMBER_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 가입한 사용자입니다."),
     MEMBER_NAME_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 닉네임입니다."),
-    MEMBER_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "사용자에게 존재하는 권한입니다."),
-    ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "존재하는 권한입니다."),
+    MEMBER_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "사용자에게 이미 존재하는 권한입니다."),
+    ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 권한입니다."),
 
     // 500 Internal Server Error (서버 오류)
+    ROLE_TYPE_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, false, "권한(ROLE) 타입 오류"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, "서버에 오류가 발생하였습니다.");
 
     private final HttpStatus httpStatus;

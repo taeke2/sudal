@@ -35,14 +35,24 @@ public class DataInitialize {
     }
 
     private void addMemberRole_ADMIN() {
-        LoginMemberRequest loginMemberRequest = new LoginMemberRequest("test@example.com", "1234");
-        LoginMemberResponse response = authService.login(loginMemberRequest);
-        MemberDto memberDto = response.getMember();
-        memberService.testAddMemberRole(memberDto.getId(), RoleType.ADMIN);
+        LoginMemberRequest rootMember = new LoginMemberRequest("root@sudal.com", "root1016");
+        LoginMemberResponse rootResponse = authService.login(rootMember);
+        MemberDto root = rootResponse.getMember();
+        memberService.testAddMemberRole(root.getId(), RoleType.ADMIN);
+        memberService.testAddMemberRole(root.getId(), RoleType.GUEST);
     }
 
     private void createMember() {
-        CreateMemberRequest memberRequest = new CreateMemberRequest(
+        CreateMemberRequest root = new CreateMemberRequest(
+                "최고관리자",
+                "root@sudal.com",
+                "root1016",
+                LocalDate.now(),
+                "010-9547-2578",
+                1
+        );
+
+        CreateMemberRequest member = new CreateMemberRequest(
                 "test",
                 "test@example.com",
                 "1234",
@@ -51,14 +61,15 @@ public class DataInitialize {
                 1
         );
 
-        memberService.signup(memberRequest);
+        memberService.signup(root);
+        memberService.signup(member);
     }
 
     private void createRoles() {
         List<CreateRoleRequest> createRoles = Arrays.asList(
-                new CreateRoleRequest("ADMIN"),
-                new CreateRoleRequest("MEMBER"),
-                new CreateRoleRequest("GUEST"));
+                new CreateRoleRequest(RoleType.ADMIN),
+                new CreateRoleRequest(RoleType.MEMBER),
+                new CreateRoleRequest(RoleType.GUEST));
 
         for (CreateRoleRequest createRole : createRoles) {
             roleService.createRole(createRole);

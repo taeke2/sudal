@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,8 @@ public class RoleController {
 
     @PostMapping
     @Secured({"ROLE_ADMIN"})
-    public ResponseCustom<Void> createRole(CreateRoleRequest createRoleRequest) {
+    public ResponseCustom<Void> createRole(@RequestBody CreateRoleRequest createRoleRequest) {
         roleService.createRole(createRoleRequest);
-        return ResponseCustom.responseNoData(ResponseCode.ROLE_ALREADY_EXIST);
+        return ResponseCustom.responseNoData(ResponseCode.ROLE_CREATE_SUCCESS);
     }
 }

@@ -64,13 +64,9 @@ public class MemberService {
     // TODO: DB 적용 후 삭제
     public void testAddMemberRole(Long memberId, RoleType roleType) {
         Member member = validationService.validateMemberById(memberId);
-        if (!member.getRoleTypes().contains(roleType)) {
-            Role role = roleRepository.findByRoleType(roleType)
-                    .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
-            member.addRole(role);
-        } else {
-            throw new MemberException(ResponseCode.MEMBER_ROLE_ALREADY_EXIST);
-        }
+        Role role = roleRepository.findByRoleType(roleType)
+                .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
+        member.addRole(role);
     }
 
 }

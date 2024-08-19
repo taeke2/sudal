@@ -30,8 +30,6 @@ public class CreateAddressRequest {
     @NotNull
     private String deliveryInstructions;
 
-    private Boolean isDefault;
-
     public Address toEntityAddress(Member member) {
         return Address.builder()
                 .member(member)
@@ -41,7 +39,7 @@ public class CreateAddressRequest {
                 .recipientPhone(recipientPhone)
                 .zipcode(zipcode)
                 .deliveryInstructions(deliveryInstructions)
-                .isDefault(isDefault)
+                .isDefault(false)
                 .build();
     }
 }

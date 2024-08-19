@@ -1,5 +1,7 @@
 package com.shop.sudal.global.common;
 
+import com.shop.sudal.domain.address.model.CreateAddressRequest;
+import com.shop.sudal.domain.address.service.AddressService;
 import com.shop.sudal.domain.entity.RoleType;
 import com.shop.sudal.domain.member.auth.model.LoginMemberRequest;
 import com.shop.sudal.domain.member.auth.model.LoginMemberResponse;
@@ -26,12 +28,52 @@ public class DataInitialize {
     private final RoleService roleService;
     private final MemberService memberService;
     private final AuthService authService;
+    private final AddressService addressService;
 
     @PostConstruct
     public void init() {
         createRoles();
         createMember();
         addMemberRole_ADMIN();
+        createAddress();
+    }
+
+    private void createAddress() {
+        LoginMemberRequest rootMember = new LoginMemberRequest("root@sudal.com", "root1016");
+        LoginMemberResponse rootResponse = authService.login(rootMember);
+        MemberDto root = rootResponse.getMember();
+        Long memberId = root.getId();
+
+        CreateAddressRequest address1 = new CreateAddressRequest(
+                "123 Main St",
+                "Apt 4B",
+                "John Doe",
+                "123-456-7890",
+                "12345",
+                "Leave at front door"
+        );
+
+        CreateAddressRequest address2 = new CreateAddressRequest(
+                "456 Main St",
+                "Apt 4B2",
+                "John Doe2",
+                "123-456-7890",
+                "12345",
+                "Leave at front door"
+        );
+
+        CreateAddressRequest address3 = new CreateAddressRequest(
+                "789 Main St",
+                "Apt 4B3",
+                "John Doe3",
+                "123-456-7890",
+                "12345",
+                "Leave at front door"
+        );
+
+        addressService.testCreateAddress(memberId, address1);
+        addressService.testCreateAddress(memberId, address2);
+        addressService.testCreateAddress(memberId, address3);
     }
 
     private void addMemberRole_ADMIN() {

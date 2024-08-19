@@ -38,6 +38,10 @@ public class Address extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isDefault;
 
+    public void updateDefault(boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
     @Builder
     public Address(Long id, Member member, String address, String addressDetail, String recipientName, String recipientPhone,
                    String zipcode, String deliveryInstructions, Boolean isDefault) {

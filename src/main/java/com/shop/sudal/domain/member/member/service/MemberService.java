@@ -30,7 +30,7 @@ public class MemberService {
     private final RoleRepository roleRepository;
     private final ValidationService validationService;
 
-    public void join(CreateMemberRequest createMemberRequest) {
+    public void signup(CreateMemberRequest createMemberRequest) {
         if (memberRepository.existsMemberByEmail(createMemberRequest.getEmail())) {
             throw new MemberException(ResponseCode.MEMBER_ALREADY_EXIST);
         }

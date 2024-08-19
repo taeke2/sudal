@@ -15,18 +15,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/join")
-    public ResponseCustom<Void> join(@RequestBody CreateMemberRequest createMemberRequest) {
-        memberService.join(createMemberRequest);
+    @PostMapping("/signup")
+    public ResponseCustom<Void> signup(@RequestBody CreateMemberRequest createMemberRequest) {
+        memberService.signup(createMemberRequest);
         return ResponseCustom.responseNoData(ResponseCode.MEMBER_CREATE_SUCCESS);
     }
 
-    @PostMapping("/role")
+    @PostMapping("/member-roles")
     @Secured({"ROLE_ADMIN"})
     public ResponseCustom<Void> addMemberRole(@RequestBody AddMemberRoleRequest addMemberRoleRequest) {
         memberService.addMemberRole(addMemberRoleRequest);

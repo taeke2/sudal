@@ -51,7 +51,7 @@ public class DataInitialize {
                 1
         );
 
-        memberService.join(memberRequest);
+        memberService.signup(memberRequest);
     }
 
     private void createRoles() {

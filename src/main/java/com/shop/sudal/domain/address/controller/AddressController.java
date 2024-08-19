@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
-@RequestMapping("/member/address")
+@RequestMapping("/members/addresses")
 public class AddressController {
 
     private final AddressService addressService;

@@ -5,6 +5,7 @@ import com.shop.sudal.domain.entity.Role;
 import com.shop.sudal.domain.entity.RoleType;
 import com.shop.sudal.domain.member.member.model.AddMemberRoleRequest;
 import com.shop.sudal.domain.member.member.model.CreateMemberRequest;
+import com.shop.sudal.domain.member.member.model.MemberDto;
 import com.shop.sudal.domain.member.member.repository.MemberRepository;
 import com.shop.sudal.domain.member.role.repository.RoleRepository;
 import com.shop.sudal.global.common.ValidationService;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -52,6 +55,10 @@ public class MemberService {
         Role role = roleRepository.findByRoleType(roleType)
                 .orElseThrow(() -> new RoleException(ResponseCode.ROLE_NOT_FOUND));
         member.addRole(role);
+    }
+
+    public List<MemberDto> getMemberList() {
+        return memberRepository.getMemberList();
     }
 
     // TODO: DB 적용 후 삭제

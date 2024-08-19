@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum ResponseCode {
 
     // 200 OK (조회)
-    MEMBER_READ_SUCCESS(HttpStatus.OK, true, "사용자 정보 조회 성공"),
+    MEMBER_LIST_READ_SUCCESS(HttpStatus.OK, true, "사용자 목록 조회 성공"),
+    MEMBER_INFO_READ_SUCCESS(HttpStatus.OK, true, "사용자 정보 조회 성공"),
     MEMBER_LOGIN_SUCCESS(HttpStatus.OK, true, "사용자 로그인 성공"),
 
     // 201 Created (생성[추가])

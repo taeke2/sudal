@@ -53,6 +53,9 @@ dependencies {
 
 	// PostgreSQL
 	implementation 'org.postgresql:postgresql'
+
+    // PDF box
+	implementation 'org.apache.pdfbox:pdfbox:2.0.32'
 }
 
 tasks.named('test') {

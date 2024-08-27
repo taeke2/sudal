@@ -13,6 +13,8 @@ spring:
 logging:
   file:
     name: ../logs/sudal.log
+  level:
+    com.shop.sudal: debug
 
 decorator:
   datasource:

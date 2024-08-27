@@ -9,21 +9,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MemberException.class)
     public ResponseCustom<Void> handleMemberException(MemberException e) {
-        return ResponseCustom.responseNoData(e.getResponseCode());
+        return ResponseCustom.exception(e.getResponseCode());
     }
 
     @ExceptionHandler(AuthException.class)
     public ResponseCustom<Void> handleAuthException(AuthException e) {
-        return ResponseCustom.responseNoData(e.getResponseCode());
+        return ResponseCustom.exception(e.getResponseCode());
     }
 
     @ExceptionHandler(RoleException.class)
     public ResponseCustom<Void> handleRoleException(RoleException e) {
-        return ResponseCustom.responseNoData(e.getResponseCode());
+        return ResponseCustom.exception(e.getResponseCode());
     }
 
     @ExceptionHandler(AddressException.class)
     public ResponseCustom<Void> handleAddressException(AddressException e) {
-        return ResponseCustom.responseNoData(e.getResponseCode());
+        return ResponseCustom.exception(e.getResponseCode());
     }
 }

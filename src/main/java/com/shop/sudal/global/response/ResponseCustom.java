@@ -20,4 +20,8 @@ public class ResponseCustom<T> {
     public static <T> ResponseCustom<T> responseNoData(ResponseCode responseCode) {
         return new ResponseCustom<>(new ResponseHeader(responseCode), null);
     }
+
+    public static <T> ResponseCustom<T> exception(ResponseCode responseCode) {
+        return new ResponseCustom<>(new ResponseHeader(responseCode), null);
+    }
 }

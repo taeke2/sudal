@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class CustomP6SpyFormatter implements MessageFormattingStrategy {
+public class CustomP6spyFormatter implements MessageFormattingStrategy {
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         String formattedTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")

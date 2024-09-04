@@ -35,7 +35,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// p6spy - show query parameters
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.2'
 
 	// JWT Token
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'

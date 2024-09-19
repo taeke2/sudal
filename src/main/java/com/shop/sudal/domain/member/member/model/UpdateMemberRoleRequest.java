@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddMemberRoleRequest {
-    private RoleType role;
+public class UpdateMemberRoleRequest {
+    private RoleType roleType;
 }

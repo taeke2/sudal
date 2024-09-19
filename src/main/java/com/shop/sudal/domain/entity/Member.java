@@ -59,12 +59,22 @@ public class Member extends BaseTimeEntity {
     private List<MemberRole> memberRoles = new ArrayList<>();
 
     // function
+    public void initMemberRoles() {
+        memberRoles = new ArrayList<>();
+    }
+
+    public boolean hasRole(RoleType roleType) {
+        return memberRoles.stream()
+                .anyMatch(memberRole -> memberRole.getRole().getRoleType().equals(roleType));
+    }
+
     public void addRole(Role role) {
-        if (memberRoles == null || memberRoles.isEmpty()) {
-            memberRoles = new ArrayList<>();
-        }
         MemberRole memberRole = new MemberRoleDto(this, role).toEntityMemberRole();
         memberRoles.add(memberRole);
+    }
+
+    public void deleteRole(Role role) {
+        memberRoles.removeIf(memberRole -> memberRole.getRole().equals(role));
     }
 
     public List<Role> getRoles() {

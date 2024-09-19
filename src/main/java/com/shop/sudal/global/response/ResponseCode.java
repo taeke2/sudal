@@ -20,7 +20,7 @@ public enum ResponseCode {
     TOKEN_CREATE_SUCCESS(HttpStatus.CREATED, true, "토큰 재발급 성공"),
     ADDRESS_CREATE_SUCCESS(HttpStatus.CREATED, true, "주소 생성 성공"),
     ROLE_CREATE_SUCCESS(HttpStatus.CREATED, true, "권한 생성 성공"),
-    ROLE_ADD_SUCCESS(HttpStatus.CREATED, true, "권한 추가 성공"),
+    ROLE_UPDATE_SUCCESS(HttpStatus.CREATED, true, "권한 변경 성공"),
 
     // 204 No Content (수정)
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),
@@ -53,7 +53,8 @@ public enum ResponseCode {
     // 409 Conflict (중복)
     MEMBER_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 가입한 사용자입니다."),
     MEMBER_NAME_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 닉네임입니다."),
-    MEMBER_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "사용자에게 이미 존재하는 권한입니다."),
+    MEMBER_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "현재 사용자 권한입니다."),
+    ADMIN_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "현재 관리자 권한입니다."),
     ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 권한입니다."),
     ADDRESS_ALREADY_EXIST(HttpStatus.CONFLICT, false, "동일한 주소가 존재합니다."),
 

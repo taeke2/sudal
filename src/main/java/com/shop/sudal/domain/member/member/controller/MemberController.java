@@ -1,6 +1,6 @@
 package com.shop.sudal.domain.member.member.controller;
 
-import com.shop.sudal.domain.member.member.model.AddMemberRoleRequest;
+import com.shop.sudal.domain.member.member.model.UpdateMemberRoleRequest;
 import com.shop.sudal.domain.member.member.model.CreateMemberRequest;
 import com.shop.sudal.domain.member.member.model.MemberDto;
 import com.shop.sudal.domain.member.member.service.MemberService;
@@ -28,9 +28,9 @@ public class MemberController {
 
     @PostMapping("/member-roles")
     @Secured({"ROLE_ADMIN"})
-    public ResponseCustom<Void> addMemberRole(@RequestBody AddMemberRoleRequest addMemberRoleRequest) {
-        memberService.addMemberRole(addMemberRoleRequest);
-        return ResponseCustom.responseNoData(ResponseCode.ROLE_ADD_SUCCESS);
+    public ResponseCustom<Void> updateMemberRole(@RequestBody UpdateMemberRoleRequest updateMemberRoleRequest) {
+        memberService.updateMemberRole(updateMemberRoleRequest);
+        return ResponseCustom.responseNoData(ResponseCode.ROLE_UPDATE_SUCCESS);
     }
 
     @GetMapping

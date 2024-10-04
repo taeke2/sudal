@@ -1,5 +1,6 @@
 package com.shop.sudal.domain.entity;
 
+import com.shop.sudal.domain.address.model.UpdateAddressRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,6 +41,15 @@ public class Address extends BaseTimeEntity {
 
     public void updateDefault(boolean isDefault) {
         this.isDefault = isDefault;
+    }
+
+    public void updateAddress(UpdateAddressRequest updateAddressRequest) {
+        this.address = updateAddressRequest.getAddress();
+        this.addressDetail = updateAddressRequest.getAddressDetail();
+        this.recipientName = updateAddressRequest.getRecipientName();
+        this.recipientPhone = updateAddressRequest.getRecipientPhone();
+        this.zipcode = updateAddressRequest.getZipcode();
+        this.deliveryInstructions = updateAddressRequest.getDeliveryInstructions();
     }
 
     @Builder

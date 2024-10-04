@@ -2,6 +2,7 @@ package com.shop.sudal.domain.address.controller;
 
 import com.shop.sudal.domain.address.model.AddressDto;
 import com.shop.sudal.domain.address.model.CreateAddressRequest;
+import com.shop.sudal.domain.address.model.UpdateAddressRequest;
 import com.shop.sudal.domain.address.service.AddressService;
 import com.shop.sudal.global.response.ResponseCode;
 import com.shop.sudal.global.response.ResponseCustom;
@@ -30,5 +31,13 @@ public class AddressController {
     @Secured({"ROLE_MEMBER"})
     public ResponseCustom<List<AddressDto>> getAddressList() {
         return ResponseCustom.response(addressService.getAddressList(), ResponseCode.ADDRESS_LIST_READ_SUCCESS);
+    }
+
+    @PatchMapping("/{id}")
+    @Secured({"ROLE_MEMBER"})
+    public ResponseCustom<Void> updateAddress(@PathVariable Long id,
+                                              @RequestBody UpdateAddressRequest updateAddressRequest) {
+        addressService.updateAddress(id, updateAddressRequest);
+        return ResponseCustom.responseNoData(ResponseCode.ADDRESS_UPDATE_SUCCESS);
     }
 }

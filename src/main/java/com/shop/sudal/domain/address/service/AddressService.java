@@ -2,6 +2,7 @@ package com.shop.sudal.domain.address.service;
 
 import com.shop.sudal.domain.address.model.AddressDto;
 import com.shop.sudal.domain.address.model.CreateAddressRequest;
+import com.shop.sudal.domain.address.model.UpdateAddressRequest;
 import com.shop.sudal.domain.address.repository.AddressRepository;
 import com.shop.sudal.domain.entity.Address;
 import com.shop.sudal.domain.entity.Member;
@@ -48,6 +49,13 @@ public class AddressService {
         Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
         return addressRepository.getAddressList(member);
+    }
+
+    public void updateAddress(Long id, UpdateAddressRequest updateAddressRequest) {
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new AddressException(ResponseCode.ADDRESS_NOT_FOUND));
+
+        address.updateAddress(updateAddressRequest);
     }
 
 }

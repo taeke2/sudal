@@ -26,6 +26,7 @@ public enum ResponseCode {
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),
     MEMBER_LOGOUT_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 로그아웃 성공"),
     MEMBER_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 회원탈퇴 성공"),
+    ADDRESS_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 주소 수정 성공"),
 
     // 400 Bad Request (잘못된 요청)
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),
@@ -46,6 +47,7 @@ public enum ResponseCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자를 찾을 수 없습니다."),
     TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자의 토큰을 찾을 수 없습니다."),
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 권한을 찾을 수 없습니다."),
+    ADDRESS_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 주소를 찾을 수 없습니다."),
 
     // 405 Method Not Allowed (허용되지 않음)
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, false, "허용되지 않은 메소드입니다."),

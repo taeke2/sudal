@@ -40,4 +40,11 @@ public class AddressController {
         addressService.updateAddress(id, updateAddressRequest);
         return ResponseCustom.responseNoData(ResponseCode.ADDRESS_UPDATE_SUCCESS);
     }
+
+    @PatchMapping("/defaults/{id}")
+    @Secured({"ROLE_MEMBER"})
+    public ResponseCustom<Void> updateDefaultAddress(@PathVariable Long id) {
+        addressService.updateDefaultAddress(id);
+        return ResponseCustom.responseNoData(ResponseCode.ADDRESS_DEFAULT_UPDATE_SUCCESS);
+    }
 }

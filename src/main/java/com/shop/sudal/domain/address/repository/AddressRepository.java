@@ -5,6 +5,8 @@ import com.shop.sudal.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long>, AddressRepositoryQdsl {
     Boolean existsByMemberAndAddressAndAddressDetailAndZipcodeAndRecipientNameAndRecipientPhone(
@@ -19,4 +21,8 @@ public interface AddressRepository extends JpaRepository<Address, Long>, Address
     Long countByMemberAndIsDefault(Member member, Boolean isDefault);
 
     Long countByMember(Member member);
+
+    Optional<Address> findByMemberAndIsDefault(Member member, Boolean isDefault);
+
+    Optional<Address> findByMember(Member member);
 }

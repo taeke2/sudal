@@ -45,6 +45,7 @@ public class AddressService {
         addressRepository.save(address);
     }
 
+    @Transactional(readOnly = true)
     public List<AddressDto> getAddressList() {
         Long memberId = validationService.validateMemberIdByAuth();
         Member member = validationService.validateMemberById(memberId);
@@ -56,6 +57,19 @@ public class AddressService {
                 .orElseThrow(() -> new AddressException(ResponseCode.ADDRESS_NOT_FOUND));
 
         address.updateAddress(updateAddressRequest);
+    }
+
+    public void updateDefaultAddress(Long id) {
+        Long memberId = validationService.validateMemberIdByAuth();
+        Member member = validationService.validateMemberById(memberId);
+
+        Address defaultAddress = addressRepository.findByMemberAndIsDefault(member, true)
+                .orElseThrow(() -> new AddressException(ResponseCode.ADDRESS_NOT_FOUND));
+        defaultAddress.updateDefault(false);
+
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new AddressException(ResponseCode.ADDRESS_NOT_FOUND));
+        address.updateDefault(true);
     }
 
 }

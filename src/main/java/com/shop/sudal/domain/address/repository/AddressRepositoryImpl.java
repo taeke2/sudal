@@ -21,6 +21,7 @@ public class AddressRepositoryImpl implements AddressRepositoryQdsl {
         return queryFactory.select(Projections.constructor(AddressDto.class, address1))
                 .from(address1)
                 .where(address1.member.eq(member))
+                .orderBy(address1.isDefault.desc(), address1.updatedAt.desc())
                 .fetch();
     }
 }

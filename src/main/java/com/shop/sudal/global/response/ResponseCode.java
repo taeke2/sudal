@@ -28,6 +28,7 @@ public enum ResponseCode {
     MEMBER_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 회원탈퇴 성공"),
     ADDRESS_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 주소 수정 성공"),
     ADDRESS_DEFAULT_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "기본 주소 변경 성공"),
+    ADDRESS_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "주소 삭제 성공"),
 
     // 400 Bad Request (잘못된 요청)
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),

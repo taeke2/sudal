@@ -72,4 +72,11 @@ public class AddressService {
         address.updateDefault(true);
     }
 
+    public void deleteAddress(Long id) {
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new AddressException(ResponseCode.ADDRESS_NOT_FOUND));
+
+        addressRepository.delete(address);
+    }
+
 }

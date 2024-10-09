@@ -47,4 +47,11 @@ public class AddressController {
         addressService.updateDefaultAddress(id);
         return ResponseCustom.responseNoData(ResponseCode.ADDRESS_DEFAULT_UPDATE_SUCCESS);
     }
+
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_MEMBER"})
+    public ResponseCustom<Void> deleteAddress(@PathVariable Long id) {
+        addressService.deleteAddress(id);
+        return ResponseCustom.responseNoData(ResponseCode.ADDRESS_DELETE_SUCCESS);
+    }
 }

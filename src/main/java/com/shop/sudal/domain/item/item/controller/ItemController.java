@@ -1,4 +1,4 @@
-package com.shop.sudal.domain.item.controller;
+package com.shop.sudal.domain.item.item.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

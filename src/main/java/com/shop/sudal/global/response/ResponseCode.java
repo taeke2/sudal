@@ -30,6 +30,7 @@ public enum ResponseCode {
     ADDRESS_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 주소 수정 성공"),
     ADDRESS_DEFAULT_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "기본 주소 변경 성공"),
     ADDRESS_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "주소 삭제 성공"),
+    CATEGORY_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "카테고리 삭제 성공"),
 
     // 400 Bad Request (잘못된 요청)
     BAD_REQUEST(HttpStatus.BAD_REQUEST, false, "잘못된 요청입니다."),
@@ -51,6 +52,8 @@ public enum ResponseCode {
     TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, false, "사용자의 토큰을 찾을 수 없습니다."),
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 권한을 찾을 수 없습니다."),
     ADDRESS_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 주소를 찾을 수 없습니다."),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 카테고리를 찾을 수 없습니다."),
+    CATEGORY_PARENT_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 부모 카테고리를 찾을 수 없습니다."),
 
     // 405 Method Not Allowed (허용되지 않음)
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, false, "허용되지 않은 메소드입니다."),

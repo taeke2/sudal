@@ -7,10 +7,7 @@ import com.shop.sudal.global.response.ResponseCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/categories")
@@ -23,5 +20,12 @@ public class CategoryController {
     public ResponseCustom<Void> createCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
         categoryService.createCategory(createCategoryRequest);
         return ResponseCustom.responseNoData(ResponseCode.CATEGORY_CREATE_SUCCESS);
+    }
+
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseCustom<Void> deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return ResponseCustom.responseNoData(ResponseCode.CATEGORY_DELETE_SUCCESS);
     }
 }

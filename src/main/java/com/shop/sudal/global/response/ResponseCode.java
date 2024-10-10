@@ -21,6 +21,7 @@ public enum ResponseCode {
     ADDRESS_CREATE_SUCCESS(HttpStatus.CREATED, true, "주소 생성 성공"),
     ROLE_CREATE_SUCCESS(HttpStatus.CREATED, true, "권한 생성 성공"),
     ROLE_UPDATE_SUCCESS(HttpStatus.CREATED, true, "권한 변경 성공"),
+    CATEGORY_CREATE_SUCCESS(HttpStatus.CREATED, true, "카테고리 생성 성공"),
 
     // 204 No Content (수정)
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),
@@ -60,7 +61,8 @@ public enum ResponseCode {
     MEMBER_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "현재 사용자 권한입니다."),
     ADMIN_ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "현재 관리자 권한입니다."),
     ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 권한입니다."),
-    ADDRESS_ALREADY_EXIST(HttpStatus.CONFLICT, false, "동일한 주소가 존재합니다."),
+    ADDRESS_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 주소입니다."),
+    CATEGORY_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 카테고리입니다."),
 
     // 500 Internal Server Error (서버 오류)
     ROLE_TYPE_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, false, "권한(ROLE) 타입 오류"),

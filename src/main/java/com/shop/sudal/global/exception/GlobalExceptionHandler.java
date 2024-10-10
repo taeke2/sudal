@@ -26,4 +26,9 @@ public class GlobalExceptionHandler {
     public ResponseCustom<Void> handleAddressException(AddressException e) {
         return ResponseCustom.exception(e.getResponseCode());
     }
+
+    @ExceptionHandler(CategoryException.class)
+    public ResponseCustom<Void> handleCategoryException(AddressException e) {
+        return ResponseCustom.exception(e.getResponseCode());
+    }
 }

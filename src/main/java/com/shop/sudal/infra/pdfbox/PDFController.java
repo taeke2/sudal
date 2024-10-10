@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/pdf")
+@RequestMapping("/pdfs")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PDFController {
 
     private final PDFService pdfService;
 
-    @PostMapping("/addImage")
+    @PostMapping("/add-images")
     public ResponseEntity<String> addImageToPDF(@RequestBody PDFDto pdfDto) {
         try {
             // 이미지 삽입

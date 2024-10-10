@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/images")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ImageController {
 
     private final ImageService imageService;
 
-    @PostMapping("/remove/background")
+    @PostMapping("/remove-backgrounds")
     public ResponseEntity<String> removeBackgroundImage(@RequestBody ImageDto imageDto) {
         try {
             imageService.removeBackground(imageDto);

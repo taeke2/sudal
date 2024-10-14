@@ -1,5 +1,6 @@
 package com.shop.sudal.domain.entity;
 
+import com.shop.sudal.domain.item.category.model.UpdateCategoryRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Category {
+public class Category extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +26,17 @@ public class Category {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parentCategoryId")
+    @JoinColumn(name = "parentId")
     private Category parentCategory;
 
-    // relationship
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> childCategories = new ArrayList<>();
+
+    public void updateCategory(UpdateCategoryRequest updateCategoryRequest) {
+        this.name = updateCategoryRequest.getName();
+        this.description = updateCategoryRequest.getDescription();
+        this.parentCategory = updateCategoryRequest.getParentCategory();
+    }
 
     @Builder
     public Category(Long id, String name, String description, Category parentCategory) {

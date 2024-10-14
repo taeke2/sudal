@@ -54,11 +54,9 @@ public class Member extends BaseTimeEntity {
         this.password = encodedPassword;
     }
 
-    // relationship
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRole> memberRoles = new ArrayList<>();
 
-    // function
     public void initMemberRoles() {
         memberRoles = new ArrayList<>();
     }

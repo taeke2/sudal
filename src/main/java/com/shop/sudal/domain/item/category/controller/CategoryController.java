@@ -1,6 +1,7 @@
 package com.shop.sudal.domain.item.category.controller;
 
 import com.shop.sudal.domain.item.category.model.CreateCategoryRequest;
+import com.shop.sudal.domain.item.category.model.UpdateCategoryRequest;
 import com.shop.sudal.domain.item.category.service.CategoryService;
 import com.shop.sudal.global.response.ResponseCode;
 import com.shop.sudal.global.response.ResponseCustom;
@@ -20,6 +21,13 @@ public class CategoryController {
     public ResponseCustom<Void> createCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
         categoryService.createCategory(createCategoryRequest);
         return ResponseCustom.responseNoData(ResponseCode.CATEGORY_CREATE_SUCCESS);
+    }
+
+    @PutMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseCustom<Void> updateCategory(@PathVariable Long id, @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+        categoryService.updateCategory(id, updateCategoryRequest);
+        return ResponseCustom.responseNoData(ResponseCode.CATEGORY_UPDATE_SUCCESS);
     }
 
     @DeleteMapping("/{id}")

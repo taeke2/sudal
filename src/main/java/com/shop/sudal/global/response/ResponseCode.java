@@ -22,6 +22,7 @@ public enum ResponseCode {
     ROLE_CREATE_SUCCESS(HttpStatus.CREATED, true, "권한 생성 성공"),
     ROLE_UPDATE_SUCCESS(HttpStatus.CREATED, true, "권한 변경 성공"),
     CATEGORY_CREATE_SUCCESS(HttpStatus.CREATED, true, "카테고리 생성 성공"),
+    CATEGORY_UPDATE_SUCCESS(HttpStatus.CREATED, true, "카테고리 변경 성공"),
 
     // 204 No Content (수정)
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),

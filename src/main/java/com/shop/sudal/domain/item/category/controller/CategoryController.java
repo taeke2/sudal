@@ -1,5 +1,6 @@
 package com.shop.sudal.domain.item.category.controller;
 
+import com.shop.sudal.domain.item.category.model.CategoryDto;
 import com.shop.sudal.domain.item.category.model.CreateCategoryRequest;
 import com.shop.sudal.domain.item.category.model.UpdateCategoryRequest;
 import com.shop.sudal.domain.item.category.service.CategoryService;
@@ -10,11 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class CategoryController {
     private final CategoryService categoryService;
+
+    @GetMapping
+    @Secured({"ROLE_ADMIN"})
+    public ResponseCustom<List<CategoryDto>> getCategories() {
+        return ResponseCustom.response(categoryService.getCategories(), ResponseCode.CATEGORY_LIST_READ_SUCCESS);
+    }
 
     @PostMapping
     @Secured({"ROLE_ADMIN"})

@@ -1,6 +1,7 @@
 package com.shop.sudal.domain.item.category.service;
 
 import com.shop.sudal.domain.entity.Category;
+import com.shop.sudal.domain.item.category.model.CategoryDto;
 import com.shop.sudal.domain.item.category.model.CreateCategoryRequest;
 import com.shop.sudal.domain.item.category.model.UpdateCategoryRequest;
 import com.shop.sudal.domain.item.category.repository.CategoryRepository;
@@ -11,11 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 @Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+
+    public List<CategoryDto> getCategories() {
+        List<Category> categories = categoryRepository.findByParentCategoryIsNull();
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for (Category category : categories) {
+            categoryDtos.add(new CategoryDto(category));
+        }
+        return categoryDtos;
+    }
 
     public void createCategory(CreateCategoryRequest createCategoryRequest) {
         if (createCategoryRequest.getParentCategory() != null &&

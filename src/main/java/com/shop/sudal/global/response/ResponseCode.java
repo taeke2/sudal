@@ -14,6 +14,7 @@ public enum ResponseCode {
     MEMBER_INFO_READ_SUCCESS(HttpStatus.OK, true, "사용자 정보 조회 성공"),
     MEMBER_LOGIN_SUCCESS(HttpStatus.OK, true, "사용자 로그인 성공"),
     ADDRESS_LIST_READ_SUCCESS(HttpStatus.OK, true, "사용자 주소 목록 조회 성공"),
+    CATEGORY_LIST_READ_SUCCESS(HttpStatus.OK, true, "카테고리 목록 조회 성공"),
 
     // 201 Created (생성[추가])
     MEMBER_CREATE_SUCCESS(HttpStatus.CREATED, true, "사용자 생성 성공"),

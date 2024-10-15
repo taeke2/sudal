@@ -31,6 +31,7 @@ public enum ResponseCode {
     MEMBER_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 회원탈퇴 성공"),
     ADDRESS_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 주소 수정 성공"),
     ADDRESS_DEFAULT_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "기본 주소 변경 성공"),
+    ROLE_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "권한 삭제 성공"),
     ADDRESS_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "주소 삭제 성공"),
     CATEGORY_DELETE_SUCCESS(HttpStatus.NO_CONTENT, true, "카테고리 삭제 성공"),
 

@@ -7,10 +7,7 @@ import com.shop.sudal.global.response.ResponseCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/roles")
@@ -24,5 +21,12 @@ public class RoleController {
     public ResponseCustom<Void> createRole(@RequestBody CreateRoleRequest createRoleRequest) {
         roleService.createRole(createRoleRequest);
         return ResponseCustom.responseNoData(ResponseCode.ROLE_CREATE_SUCCESS);
+    }
+
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseCustom<Void> deleteRole(@PathVariable Long id) {
+        roleService.deleteRole(id);
+        return ResponseCustom.responseNoData(ResponseCode.ROLE_DELETE_SUCCESS);
     }
 }

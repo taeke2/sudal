@@ -31,4 +31,9 @@ public class GlobalExceptionHandler {
     public ResponseCustom<Void> handleCategoryException(AddressException e) {
         return ResponseCustom.exception(e.getResponseCode());
     }
+
+    @ExceptionHandler(ItemException.class)
+    public ResponseCustom<Void> handleItemException(ItemException e) {
+        return ResponseCustom.exception(e.getResponseCode());
+    }
 }

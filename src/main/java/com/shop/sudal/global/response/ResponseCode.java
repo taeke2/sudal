@@ -24,6 +24,7 @@ public enum ResponseCode {
     ROLE_UPDATE_SUCCESS(HttpStatus.CREATED, true, "권한 변경 성공"),
     CATEGORY_CREATE_SUCCESS(HttpStatus.CREATED, true, "카테고리 생성 성공"),
     CATEGORY_UPDATE_SUCCESS(HttpStatus.CREATED, true, "카테고리 변경 성공"),
+    ITEM_CREATE_SUCCESS(HttpStatus.CREATED, true, "아이템 생성 성공"),
 
     // 204 No Content (수정)
     MEMBER_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, true, "사용자 정보 수정 성공"),
@@ -57,6 +58,7 @@ public enum ResponseCode {
     ADDRESS_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 주소를 찾을 수 없습니다."),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 카테고리를 찾을 수 없습니다."),
     CATEGORY_PARENT_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 부모 카테고리를 찾을 수 없습니다."),
+    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 아이템을 찾을 수 없습니다."),
 
     // 405 Method Not Allowed (허용되지 않음)
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, false, "허용되지 않은 메소드입니다."),
@@ -69,6 +71,7 @@ public enum ResponseCode {
     ROLE_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 권한입니다."),
     ADDRESS_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 주소입니다."),
     CATEGORY_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 카테고리입니다."),
+    ITEM_ALREADY_EXIST(HttpStatus.CONFLICT, false, "이미 존재하는 아이템입니다."),
 
     // 500 Internal Server Error (서버 오류)
     ROLE_TYPE_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, false, "권한(ROLE) 타입 오류"),

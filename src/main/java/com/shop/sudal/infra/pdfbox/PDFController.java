@@ -20,6 +20,7 @@ public class PDFController {
 
     @PostMapping("/add-images")
     public ResponseEntity<String> addImageToPDF(@RequestBody PDFDto pdfDto) {
+        System.out.println(pdfDto.toString());
         try {
             // 이미지 삽입
             pdfService.insertImageInPDF(pdfDto);

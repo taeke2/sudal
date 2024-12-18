@@ -33,13 +33,24 @@ public class Item extends BaseEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemCategory> categories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemImage> itemImages = new ArrayList<>();
+
     public void initCategories() {
         categories = new ArrayList<>();
+    }
+
+    public void initItemImages() {
+        itemImages = new ArrayList<>();
     }
 
     public void addCategory(Category category) {
         ItemCategory itemCategory = new ItemCategoryDto(this, category).toEntityItemCategory();
         categories.add(itemCategory);
+    }
+
+    public void addItemImage(ItemImage itemImage) {
+        itemImages.add(itemImage);
     }
 
     @Builder

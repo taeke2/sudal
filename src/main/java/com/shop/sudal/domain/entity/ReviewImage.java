@@ -21,6 +21,9 @@ public class ReviewImage {
     private Review review;
 
     @Column(nullable = false)
+    private Integer seq;
+
+    @Column(nullable = false)
     private String url;
 
     @Column(nullable = false)

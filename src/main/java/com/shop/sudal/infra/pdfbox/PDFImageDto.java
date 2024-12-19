@@ -9,11 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PDFImageDto {
-    private String imageFilepath;
-    private Float x;
-    private Float y;
-    private Float width;
-    private Float height;
-    private int pageIndex;
-    private Float rotationDegrees;
+    private String logoFilepath;
+    private String signFilepath;
+
+    @Override
+    public String toString() {
+        return "PDFImageDto{" +
+                "logoFilepath='" + logoFilepath + '\'' +
+                ", signFilepath='" + signFilepath + '\'' +
+                '}';
+    }
 }

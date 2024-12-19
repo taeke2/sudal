@@ -3,6 +3,7 @@ package com.shop.sudal.infra.pdfbox;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 import org.springframework.core.io.ClassPathResource;
@@ -14,50 +15,84 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PDFService {
 
     public void insertImageInPDF(PDFDto pdfDto) throws IOException {
-        // 리소스 폴더에서 PDF 파일과 이미지 파일 읽기
         ClassPathResource pdfResource = new ClassPathResource(pdfDto.getPdfFilepath());
-//        ClassPathResource imageResource = new ClassPathResource(pdfDto.getImageFileName());
 
         try (InputStream pdfStream = pdfResource.getInputStream();
              PDDocument document = PDDocument.load(pdfStream)) {
 
+            PDPage page = document.getPage(pdfDto.getPageIndex());
+
             List<PDFImageDto> images = pdfDto.getImages();
+            float x = pdfDto.getX();
+            float signY = pdfDto.getY();
+            float logoY = signY + pdfDto.getSignHeight();
+            float signWidth = pdfDto.getSignWidth();
+            float signHeight = pdfDto.getSignHeight();
+            float logoWidth = pdfDto.getLogoWidth();
+            float radians = (float) Math.toRadians(pdfDto.getRotationDegrees());
+            int column = pdfDto.getColumns();
+            float rowsDistance = pdfDto.getRowsDistance();
+
+            float pdfWidth = getPDFDimensions(page, pdfDto.getPageIndex()).get("width");
+            float signWidthDistance = column == 1 ? 0 : (pdfWidth - (2 * x) - (signWidth * column)) / (column - 1);
+
+            float scaleX = pdfDto.isFlipHorizontal() ? -1 : 1;
+            float scaleY = pdfDto.isFlipVertical() ? -1 : 1;
+
+            int columnCount = 1;
 
             for (PDFImageDto imageDto : images) {
-                // 삽입할 페이지 선택
-                PDPage page = document.getPage(imageDto.getPageIndex());
+                byte[] logoBytes = downloadImageFromURL(imageDto.getLogoFilepath());
+                byte[] signBytes = downloadImageFromURL(imageDto.getSignFilepath());
 
-                // 이미지 URL에서 이미지 데이터 가져오기
-                byte[] imageBytes = downloadImageFromURL(imageDto.getImageFilepath());
+                PDImageXObject pdLogo = PDImageXObject.createFromByteArray(document, logoBytes, "logo");
+                PDImageXObject pdSign = PDImageXObject.createFromByteArray(document, signBytes, "sign");
 
-                // 이미지 삽입
-                PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, imageBytes, "image");
+                Map<String, Integer> logoDimensions = getImageDimensions(pdLogo);
 
-                float radians = (float) Math.toRadians(imageDto.getRotationDegrees());
+                float logoHeight = (logoDimensions.get("height") * pdfDto.getLogoWidth()) / logoDimensions.get("width");
 
-                // 콘텐츠 스트림 시작
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true)) {
-                    // 변환 매트릭스 설정
-                    contentStream.saveGraphicsState(); // 현재 그래픽 상태 저장
+                    contentStream.saveGraphicsState();
 
-                    // 이미지가 상하 반전되지 않도록 변환 매트릭스 설정
-                    Matrix transform = new Matrix();
-                    transform.translate(imageDto.getX(), imageDto.getY() + imageDto.getHeight());
-                    transform.scale(1, -1);
-                    transform.rotate(radians);
+                    Matrix signTransform = new Matrix();
+                    signTransform.translate(x, signY);
+                    signTransform.scale(scaleX, scaleY);
+                    signTransform.rotate(radians);
 
-                    contentStream.transform(transform);
+                    contentStream.transform(signTransform);
+                    contentStream.drawImage(pdSign, 0, 0, signWidth, signHeight);
 
-                    // 이미지 삽입
-                    contentStream.drawImage(pdImage, 0, 0, imageDto.getWidth(), imageDto.getHeight());
+                    contentStream.restoreGraphicsState();
+                    contentStream.saveGraphicsState();
 
-                    contentStream.restoreGraphicsState(); // 이전 그래픽 상태로 복원
+                    Matrix logoTransform = new Matrix();
+                    logoTransform.translate(x, logoY);
+                    logoTransform.scale(scaleX, scaleY);
+                    logoTransform.rotate(radians);
+
+                    contentStream.transform(logoTransform);
+                    contentStream.drawImage(pdLogo, 0, 0, logoWidth, logoHeight);
+
+                    contentStream.restoreGraphicsState();
+
+                    if(columnCount == column) {
+                        x = pdfDto.getX();
+                        signY -= (signHeight + logoHeight + rowsDistance);
+                        logoY = signY + signHeight;
+                        columnCount = 1;
+                    } else {
+                        x += (signWidth + signWidthDistance);
+                        columnCount++;
+                    }
                 }
             }
 
@@ -65,6 +100,23 @@ public class PDFService {
             File outputFile = new File("output-" + pdfDto.getPdfFilepath()); // 결과 파일 경로 지정
             document.save(outputFile);
         }
+    }
+
+    private Map<String, Float> getPDFDimensions(PDPage page, int pageIndex) {
+        PDRectangle mediaBox = page.getMediaBox();
+
+        Map<String, Float> dimensions = new HashMap<>();
+        dimensions.put("width", mediaBox.getWidth());
+        dimensions.put("height", mediaBox.getHeight());
+
+        return dimensions;
+    }
+
+    private Map<String, Integer> getImageDimensions(PDImageXObject image) {
+        Map<String, Integer> dimensions = new HashMap<>();
+        dimensions.put("width", image.getWidth());
+        dimensions.put("height", image.getHeight());
+        return dimensions;
     }
 
     // S3 이미지 URL에서 이미지 데이터를 다운로드하는 메서드

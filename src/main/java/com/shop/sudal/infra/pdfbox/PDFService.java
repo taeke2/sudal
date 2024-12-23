@@ -4,6 +4,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 import org.springframework.core.io.ClassPathResource;
@@ -21,6 +22,59 @@ import java.util.Map;
 
 @Service
 public class PDFService {
+
+    public void insertImageInPDF2(PDF2Dto pdfDto) throws IOException {
+        ClassPathResource pdfResource = new ClassPathResource(pdfDto.getPdfFilepath());
+
+        List<PDFImage2Dto> images = pdfDto.getImages();
+        float x = pdfDto.getX();
+        float y = pdfDto.getY();
+        float width = pdfDto.getWidth();
+        float height = pdfDto.getHeight();
+        float radians = (float) Math.toRadians(pdfDto.getRotationDegrees());
+
+        float scaleX = pdfDto.isFlipHorizontal() ? -1 : 1;
+        float scaleY = pdfDto.isFlipVertical() ? -1 : 1;
+
+
+        for (PDFImage2Dto imageDto : images) {
+            try (InputStream pdfStream = pdfResource.getInputStream();
+                 PDDocument document = PDDocument.load(pdfStream)) {
+
+                PDPage page = document.getPage(pdfDto.getPageIndex());
+
+                PDType0Font font = PDType0Font.load(document, new File("src/main/resources/fonts/NanumGothic.ttf"));
+                System.out.println("imageDto = " + imageDto);
+                byte[] imageBytes = downloadImageFromURL(imageDto.getImageFilepath());
+
+                PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, imageBytes, "image");
+
+                try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true)) {
+                    contentStream.saveGraphicsState();
+
+                    Matrix signTransform = new Matrix();
+                    signTransform.translate(x, y);
+                    signTransform.scale(scaleX, scaleY);
+                    signTransform.rotate(radians);
+
+                    contentStream.transform(signTransform);
+                    contentStream.drawImage(pdImage, 0, 0, width, height);
+
+                    contentStream.restoreGraphicsState();
+
+                    contentStream.beginText();
+                    contentStream.setFont(font, 15); // 폰트 및 크기 설정
+                    contentStream.setLeading(14.5f); // 줄 간격 설정
+                    contentStream.newLineAtOffset(x - 100, y + 5); // 시작 좌표 (x, y)
+                    contentStream.showText(imageDto.getName()); // 텍스트 추가
+                    contentStream.endText();
+                }
+                String s = imageDto.getName().replaceAll(" ", "");
+                File outputFile = new File("../" + s + ".pdf"); // 결과 파일 경로 지정
+                document.save(outputFile);
+            }
+        }
+    }
 
     public void insertImageInPDF(PDFDto pdfDto) throws IOException {
         ClassPathResource pdfResource = new ClassPathResource(pdfDto.getPdfFilepath());
@@ -84,7 +138,7 @@ public class PDFService {
 
                     contentStream.restoreGraphicsState();
 
-                    if(columnCount == column) {
+                    if (columnCount == column) {
                         x = pdfDto.getX();
                         signY -= (signHeight + logoHeight + rowsDistance);
                         logoY = signY + signHeight;

@@ -31,4 +31,18 @@ public class PDFController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add image");
         }
     }
+
+    @PostMapping("/add-images2")
+    public ResponseEntity<String> addImageToPDF2(@RequestBody PDF2Dto pdfDto) {
+        System.out.println(pdfDto.toString());
+        try {
+            // 이미지 삽입|
+            pdfService.insertImageInPDF2(pdfDto);
+
+            return ResponseEntity.ok("Image added successfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add image");
+        }
+    }
 }

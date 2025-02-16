@@ -103,6 +103,10 @@ public class PDFService {
 
             int columnCount = 1;
 
+            PDType0Font font = PDType0Font.load(document, new File("src/main/resources/fonts/NanumGothic.ttf"));
+
+            int i = 0;
+
             for (PDFImageDto imageDto : images) {
                 byte[] logoBytes = downloadImageFromURL(imageDto.getLogoFilepath());
                 byte[] signBytes = downloadImageFromURL(imageDto.getSignFilepath());
@@ -138,6 +142,15 @@ public class PDFService {
 
                     contentStream.restoreGraphicsState();
 
+                    if(i==7 || i == 9 || i == 11 || i == 12 || i == 13 || i == 14) {
+                        contentStream.beginText();
+                        contentStream.setFont(font, 11); // 폰트 및 크기 설정
+                        contentStream.setLeading(14.5f); // 줄 간격 설정
+                        contentStream.newLineAtOffset(x - 15, signY + 5); // 시작 좌표 (x, y)
+                        contentStream.showText("代"); // 텍스트 추가
+                        contentStream.endText();
+                    }
+
                     if (columnCount == column) {
                         x = pdfDto.getX();
                         signY -= (signHeight + logoHeight + rowsDistance);
@@ -148,6 +161,7 @@ public class PDFService {
                         columnCount++;
                     }
                 }
+                i++;
             }
 
             // 수정된 PDF 파일 저장 (덮어쓰기)
